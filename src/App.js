@@ -1,25 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
+import Home from './pages/Home'
+import Proyectos from "./pages/Proyectos"
+import Equipamiento from "./pages/Equipamiento"
+import Obras from "./pages/Obras"
+import Producto from "./pages/Producto"
+import Documentacion from "./pages/Documentacion"
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import Grid from '@material-ui/core/Grid'
+import { Switch, Route } from "react-router"
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Grid container direction="column">
+        <Grid item>
+          <Navbar />
+        </Grid>
+        <Grid item container>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/obras" component={Obras} />
+            <Route exact path="/proyectos" component={Proyectos} />
+            <Route exact path="/equipamiento" component={Equipamiento} />
+            <Route exact path="/producto" component={Producto} />
+            <Route exact path="/documentacion" component={Documentacion} />
+          </Switch>
+        </Grid>
+        <Grid item>
+          <Footer />
+        </Grid>
+      </Grid>
+    </>
+  )
 }
 
 export default App;
