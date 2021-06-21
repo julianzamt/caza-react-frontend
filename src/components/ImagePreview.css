@@ -1,0 +1,14 @@
+.imagePreview__thumbnail-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  font-size: small;
+  background-color: white;
+}
+
+.imagePreview__thumbnail {
+  width: 60px;
+}

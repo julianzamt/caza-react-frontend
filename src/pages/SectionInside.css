@@ -1,0 +1,19 @@
+.sectionInside__container {
+  padding-left: 2em;
+  padding-right: 2em;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.sectionInside__titleSection {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionInside__text {
+  text-align: justify;
+  font-size: small;
+  color: #434343;
+}

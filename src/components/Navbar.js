@@ -1,37 +1,25 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-    },
-}));
+import ListIcon from '@material-ui/icons/List';
+import { ReactComponent as CazaIcon } from '../icons/logo.svg'
+import './Navbar.css'
 
 export default function Navbar() {
-    const classes = useStyles();
-
     return (
-        <div className={classes.root}>
-            <AppBar position="static" color="transparent">
-                <Toolbar>
-
-                    <Typography variant="h6" className={classes.title}>
-                        Caza Estudio
-                    </Typography>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon />
+        <div >
+            <AppBar position="static" color="transparent" elevation={0}>
+                <Toolbar className="navbar__container">
+                    <div className="logo-title__container">
+                        <CazaIcon className="cazaicon" />
+                        <div className="title__container">
+                            <div className="title">CAZA ESTUDIO</div>
+                            {/* <div className="subtitle">Arquitectas</div> */}
+                        </div>
+                    </div>
+                    <IconButton color="inherit" aria-label="menu">
+                        <ListIcon color="primary" />
                     </IconButton>
                 </Toolbar>
             </AppBar>

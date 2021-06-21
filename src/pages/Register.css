@@ -1,0 +1,17 @@
+.register__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.register__title {
+    margin-bottom:1em;
+    color: #393939;
+}
+
+.register__error {
+    font-size: small;
+    color: red;
+    margin-top: 1em;
+}

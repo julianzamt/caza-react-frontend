@@ -1,0 +1,51 @@
+.footer__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f6f6f6;
+  padding: 1em;
+}
+
+.footer__inner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer__title {
+  font-family: "Source Sans Pro";
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #585858;
+}
+
+.footer__lists {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #585858;
+}
+
+.footer__lists-icons {
+  font-size: 1.3em;
+  margin-right: 0.5em;
+}
+
+.footer__lists-item {
+  margin-bottom: 0.5em;
+}
+
+.footer__social-container {
+  margin-bottom: 1em;
+}
+
+.footer__social-icons {
+  margin-right: 0.5em;
+  color: #585858;
+}

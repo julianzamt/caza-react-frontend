@@ -1,0 +1,25 @@
+.home__container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home__options {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.home__item {
+  color: #585858;
+  font-size: 2em;
+  font-family: "Source Sans Pro";
+}
+
+.home__item:hover {
+  color: #e2e2c7;
+  text-decoration: none;
+}
