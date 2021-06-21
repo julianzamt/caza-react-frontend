@@ -5,7 +5,7 @@ import "./Home.css";
 const Home = () => {
   return (
     <div className="home__container">
-      <img src={logo} width="50" alt="logo" />
+      <img src={logo} width="100" alt="logo" className="home__logo" />
       <div className="home__options">
         <Link to={"/obras"} className="home__item">
           Obras

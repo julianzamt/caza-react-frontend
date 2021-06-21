@@ -6,6 +6,7 @@
 
 .cover__image {
   width: 100%;
+  visibility: hidden;
 }
 
 .cover__text {

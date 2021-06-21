@@ -4,16 +4,23 @@
   display: flex;
   flex-direction: column;
   width: 100vw;
+  color: #585858;
+  font-family: "Source Sans Pro";
 }
 
-.sectionInside__titleSection {
+.sectionInside__title {
   margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.sectionInside__textSection {
+  margin-top: -1em;
+  margin-bottom: 1em;
   display: flex;
   flex-direction: column;
 }
 
 .sectionInside__text {
   text-align: justify;
-  font-size: small;
-  color: #434343;
+  font-size: smaller;
 }

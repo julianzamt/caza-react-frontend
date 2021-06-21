@@ -1,9 +1,14 @@
 .home__container {
   height: 100%;
+  padding: 2em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.home__logo {
+  margin: 0.5em;
 }
 
 .home__options {
@@ -11,6 +16,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  margin: 2em 0 2em 0;
 }
 
 .home__item {

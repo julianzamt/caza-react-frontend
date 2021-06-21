@@ -48,14 +48,13 @@ const SectionInside = props => {
         <LinearProgress />
       ) : (
         <div className="sectionInside__container">
-          <section>
-            <h3>{subtitle}</h3>
-          </section>
+          <h3 className="sectionInside__title">{subtitle}</h3>
           <section>
             <div>{images}</div>
           </section>
-          <section className="sectionInside__titleSection">
-            <h6>{year}</h6>
+          <section className="sectionInside__textSection">
+            <h3 className="sectionInside__title">{subtitle}</h3>
+            <h6 style={{ fontWeight: "700" }}>{year}</h6>
             <p className="sectionInside__text">{text}</p>
           </section>
         </div>
