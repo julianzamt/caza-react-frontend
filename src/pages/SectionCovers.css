@@ -1,0 +1,15 @@
+.sectionCovers__container {
+  padding: 2em 2em 4em 2em;
+  font-family: "Source Sans Pro";
+}
+
+.sectionCovers__title {
+  text-transform: capitalize;
+  margin-bottom: 1em;
+  font-size: 10vw;
+}
+
+.sectionCovers__covers_container {
+  display: flex;
+  flex-direction: column;
+}

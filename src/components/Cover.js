@@ -5,6 +5,7 @@ import "./Cover.css";
 const Cover = ({ path, title, id, section }) => {
   return (
     <div className="cover__container">
+      <div className="cover__dark-overlay"></div>
       <div className="cover__text">{title}</div>
       <Link to={`/${section}/${id}`}>
         {path ? (

@@ -27,11 +27,12 @@ const SectionCovers = ({ section }) => {
 
   useEffect(() => {
     fetchCovers();
-  }, []);
+  }, [section]);
 
   return (
-    <div>
-      <div>{covers}</div>
+    <div className="sectionCovers__container">
+      <h3 className="sectionCovers__title">{section}</h3>
+      <div className="sectionCovers__covers_container">{covers}</div>
     </div>
   );
 };
