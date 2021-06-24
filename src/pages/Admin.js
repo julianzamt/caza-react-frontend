@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import CreateForm from "../components/CreateForm";
 import DocumentacionCreateForm from "../components/DocumentacionCreateForm";
@@ -6,10 +6,14 @@ import DocumentacionEditForm from "../components/DocumentacionEditForm";
 import EditForm from "../components/EditForm";
 import Button from "react-bootstrap/Button";
 import "./Admin.css";
+import AppContext from "../context/AppContext";
+
 const Admin = () => {
   const [formType, setFormType] = useState("");
   const [feedback, setFeedback] = useState(false);
   const [section, setSection] = useState("");
+
+  const context = useContext(AppContext);
 
   const handleClick = event => {
     const formTypeSelection = event.target.id;
@@ -36,6 +40,7 @@ const Admin = () => {
 
   return (
     <div className="admin__container">
+      <h6 className="text-right mt-2 mb-2">Hola, {context.username}</h6>
       <Form>
         <Form.Label htmlFor="section">Elegí una sección:</Form.Label>
         <Form.Control as="select" onChange={handleChange} name="section" id="section" value={section}>

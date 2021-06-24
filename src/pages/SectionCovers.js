@@ -15,8 +15,8 @@ const SectionCovers = ({ section }) => {
       const collection = await fetchCollection(section);
       setCovers(
         collection.data.map(document => (
-          <Link to={`/${section}/${document._id}`}>
-            <Cover path={document.cover[0] ? document.cover[0].path : null} title={document.title} key={document._id} section={section} />
+          <Link to={`/${section}/${document._id}`} key={document._id}>
+            <Cover path={document.cover[0] ? document.cover[0].path : null} title={document.title} section={section} />
           </Link>
         ))
       );

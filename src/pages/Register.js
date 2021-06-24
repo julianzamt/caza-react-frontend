@@ -4,6 +4,8 @@ import AppContext from "../context/AppContext";
 import "./Register.css";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
+import { errorMessages } from "../utils/errorMessages";
+import axios from "axios";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -16,42 +18,30 @@ const Register = () => {
 
   const context = useContext(AppContext);
 
-  async function registerUser() {
+  async function createUser() {
     try {
       setRegistrationError(false);
       setMismatchError(false);
       if (password !== confirmation) {
-        setMismatchError(true);
-        return;
+        return setMismatchError(true);
       }
       setIsLoading(true);
-      const newUser = JSON.stringify({
+      const newUser = {
         username: username,
         password: password,
         confirmation: confirmation,
         secretKey: secretKey,
-      });
+      };
 
-      let response = await fetch("http://localhost:3001/users/register", {
-        method: "POST",
-        body: newUser,
-        headers: new Headers({
-          "Content-Type": "application/json",
-        }),
-      });
-
-      if (response.status !== 200) {
-        setRegistrationError(true);
-        setIsLoading(false);
-        return;
-      }
-
-      response = await response.json();
+      let response = await axios.post("http://localhost:5000/users/register", newUser);
+      console.log(response);
 
       context.loginUser(username);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setRegistrationError(true);
+      setIsLoading(false);
     }
   }
 
@@ -64,14 +54,14 @@ const Register = () => {
       setPassword(value);
     } else if (name === "secret-key") {
       setSecretKey(value);
-    } else {
+    } else if (name === "confirmation") {
       setConfirmation(value);
     }
   }
 
   function handleSubmit(ev) {
     ev.preventDefault();
-    registerUser();
+    createUser();
   }
 
   return (
@@ -96,13 +86,13 @@ const Register = () => {
         </Form.Group>
 
         <Button type="submit" variant="secondary" size="sm">
-          Register {isLoading && <Spinner animation="border" variant="info" className="ml-3" />}{" "}
+          Register {isLoading && <Spinner animation="border" variant="info" className="ml-3" />}
         </Button>
-        <div className="register__error">
-          {mismatchError ? "Password and confirmation must match" : null}{" "}
-          {registrationError ? "An error occurred during registration. Please try again" : null}
-        </div>
       </Form>
+      <div className="register__error">
+        {mismatchError && <span>{errorMessages.MISMATCHERROR}</span>}
+        {registrationError && <span>{errorMessages.ERROR}</span>}
+      </div>
     </div>
   );
 };
