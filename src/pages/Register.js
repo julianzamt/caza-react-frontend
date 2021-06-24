@@ -1,107 +1,110 @@
-import Form from 'react-bootstrap/Form'
-import { useState, useContext } from "react"
-import AppContext from "../context/AppContext"
-import "./Register.css"
-import Button from 'react-bootstrap/Button'
-import Spinner from 'react-bootstrap/Spinner'
+import Form from "react-bootstrap/Form";
+import { useState, useContext } from "react";
+import AppContext from "../context/AppContext";
+import "./Register.css";
+import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 
 const Register = () => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmation, setConfirmation] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
-    const [mismatchError, setMismatchError] = useState(false)
-    const [registrationError, setRegistrationError] = useState(false)
-    const [secretKey, setSecretKey] = useState('')
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmation, setConfirmation] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [mismatchError, setMismatchError] = useState(false);
+  const [registrationError, setRegistrationError] = useState(false);
+  const [secretKey, setSecretKey] = useState("");
 
-    const context = useContext(AppContext)
+  const context = useContext(AppContext);
 
-    async function registerUser() {
-        try {
-            setRegistrationError(false)
-            setMismatchError(false)
-            if (password !== confirmation) {
-                setMismatchError(true)
-                return
-            }
-            setIsLoading(true)
-            const newUser = JSON.stringify({
-                username: username,
-                password: password,
-                confirmation: confirmation,
-                secretKey: secretKey
-            })
+  async function registerUser() {
+    try {
+      setRegistrationError(false);
+      setMismatchError(false);
+      if (password !== confirmation) {
+        setMismatchError(true);
+        return;
+      }
+      setIsLoading(true);
+      const newUser = JSON.stringify({
+        username: username,
+        password: password,
+        confirmation: confirmation,
+        secretKey: secretKey,
+      });
 
-            let response = await fetch('http://localhost:3001/users/register', {
-                method: 'POST',
-                body: newUser,
-                headers: new Headers({
-                    'Content-Type': "application/json"
-                })
-            })
+      let response = await fetch("http://localhost:3001/users/register", {
+        method: "POST",
+        body: newUser,
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+      });
 
-            if (response.status !== 200) {
-                setRegistrationError(true)
-                setIsLoading(false)
-                return
-            }
+      if (response.status !== 200) {
+        setRegistrationError(true);
+        setIsLoading(false);
+        return;
+      }
 
-            response = await response.json()
+      response = await response.json();
 
-            context.loginUser(username)
-            setIsLoading(false)
-        } catch (err) {
-            console.log(err)
-        }
+      context.loginUser(username);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
     }
+  }
 
-    function handleChange(event) {
-        const name = event.target.name
-        const value = event.target.value
-        if (name === 'username') {
-            setUsername(value)
-        } else if (name === 'password') {
-            setPassword(value)
-        } else if (name === 'secret-key') {
-            setSecretKey(value)
-        } else {
-            setConfirmation(value)
-        }
-
+  function handleChange(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+    if (name === "username") {
+      setUsername(value);
+    } else if (name === "password") {
+      setPassword(value);
+    } else if (name === "secret-key") {
+      setSecretKey(value);
+    } else {
+      setConfirmation(value);
     }
+  }
 
-    function handleSubmit(ev) {
-        ev.preventDefault()
-        registerUser()
-    }
+  function handleSubmit(ev) {
+    ev.preventDefault();
+    registerUser();
+  }
 
-    return (
-        <div className="register__container">
-            <h2 className="register__title">Registro</h2>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group>
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type="text" placeholder="Enter username" name="username" value={username} onChange={handleChange} required />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Enter password" name="password" value={password} onChange={handleChange} required />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Confirmation</Form.Label>
-                    <Form.Control type="password" placeholder="Confirm password" name="confirmation" value={confirmation} onChange={handleChange} required />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Secret Key</Form.Label>
-                    <Form.Control type="password" placeholder="Secret Key" name="secret-key" value={secretKey} onChange={handleChange} required />
-                </Form.Group>
-                <div style={{ textAlign: "center" }}>
-                    <Button type="submit" variant="success" size="sm">{isLoading ? <Spinner animation="grow" variant="info" /> : "Register"} </Button>
-                    <div className="register__error">{mismatchError ? "Password and confirmation must match" : null} {registrationError ? "An error occurred during registration. Please try again" : null}</div>
-                </div>
-            </Form>
+  return (
+    <div className="register__container">
+      <h2 className="register__title">Registro</h2>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>Username</Form.Label>
+          <Form.Control type="text" placeholder="Enter username" name="username" value={username} onChange={handleChange} required />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Enter password" name="password" value={password} onChange={handleChange} required />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Confirmation</Form.Label>
+          <Form.Control type="password" placeholder="Confirm password" name="confirmation" value={confirmation} onChange={handleChange} required />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Secret Key</Form.Label>
+          <Form.Control type="password" placeholder="Enter Secret Key" name="secret-key" value={secretKey} onChange={handleChange} required />
+        </Form.Group>
+
+        <Button type="submit" variant="secondary" size="sm">
+          Register {isLoading && <Spinner animation="border" variant="info" className="ml-3" />}{" "}
+        </Button>
+        <div className="register__error">
+          {mismatchError ? "Password and confirmation must match" : null}{" "}
+          {registrationError ? "An error occurred during registration. Please try again" : null}
         </div>
-    )
-}
+      </Form>
+    </div>
+  );
+};
 
-export default Register
+export default Register;
