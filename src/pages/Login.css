@@ -6,3 +6,12 @@
   font-family: "Source Sans Pro";
   padding: 2em 2em 6em 2em;
 }
+
+.login__error {
+  font-size: small;
+  color: red;
+  margin-top: 2em;
+  padding-left: 2em;
+  padding-right: 2em;
+  text-align: center;
+}

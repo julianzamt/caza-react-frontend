@@ -5,6 +5,7 @@ import "./Register.css";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { errorMessages } from "../utils/errorMessages";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
@@ -61,7 +62,7 @@ const Register = () => {
 
   return (
     <div className="register__container">
-      <h2 className="register__title">Registro</h2>
+      <h1 className="register__title">Admin Registro</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Username</Form.Label>
@@ -85,6 +86,9 @@ const Register = () => {
         </Button>
       </Form>
       {feedback && <div className="register__error">{feedback}</div>}
+      <Link to="/admin/login" className="mt-4 text-decoration-none text-reset">
+        <p style={{ fontSize: "0.9em", borderTop: "1px solid lightgray", paddingTop: "1em" }}>Ya tenés cuenta? Logueate acá</p>
+      </Link>
     </div>
   );
 };

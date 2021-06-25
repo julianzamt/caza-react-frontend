@@ -18,7 +18,7 @@ const CoverPreview = ({ img, document, setFeedback, setDocument, section }) => {
       setIsLoading(false);
       setDocument(updatedDocument.data);
     } catch (e) {
-      console.log(e);
+      console.log(e.response.data.message);
       setFeedback(errorMessages.ERROR);
       setIsLoading(false);
     }

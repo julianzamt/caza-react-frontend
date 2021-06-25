@@ -41,7 +41,9 @@ const Admin = () => {
   return (
     <div className="admin__container">
       <h2 className="text-center">Admin</h2>
-      <h6 className="text-right mt-2 mb-2">Hola, {context.username}.</h6>
+      <h6 className="text-right mt-2 mb-2">
+        Hola, {context.username}. | <span onClick={() => context.logoutUser()}>Cerrar sesión</span>
+      </h6>
       <Form>
         <Form.Label htmlFor="section">Elegí una sección:</Form.Label>
         <Form.Control as="select" onChange={handleChange} name="section" id="section" value={section}>

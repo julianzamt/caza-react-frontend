@@ -5,31 +5,37 @@ import AppContext from "./AppContext";
 const GlobalState = props => {
   const [login, setLogin] = useState(false);
   const [username, setUsername] = useState(localStorage.getItem("username"));
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const history = useHistory();
 
-  const loginUser = username => {
-    setLogin(true);
+  const loginUser = (username, token) => {
     localStorage.setItem("login", true);
     localStorage.setItem("username", username);
+    localStorage.setItem("token", token);
+    setLogin(true);
     setUsername(username);
+    setToken(token);
     history.push("/admin");
   };
 
   const logoutUser = () => {
-    setLogin(false);
     localStorage.setItem("login", false);
-    setUsername("");
+    localStorage.setItem("token", "");
     localStorage.setItem("username", "");
+    setUsername("");
+    setToken("");
+    setLogin(false);
     history.push("/");
   };
 
   return (
     <AppContext.Provider
       value={{
-        login: login,
-        username: username,
-        loginUser: loginUser,
-        logoutUser: logoutUser,
+        login,
+        username,
+        token,
+        loginUser,
+        logoutUser,
       }}>
       {props.children}
     </AppContext.Provider>

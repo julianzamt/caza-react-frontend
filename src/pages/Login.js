@@ -1,9 +1,10 @@
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Button from "react-bootstrap/Button";
-import { errorMessages } from "../utils/errorMessages";
 import Spinner from "react-bootstrap/Spinner";
 import { Link } from "react-router-dom";
+import AppContext from "../context/AppContext";
+import axios from "axios";
 import "./Login.css";
 
 const Login = () => {
@@ -11,6 +12,21 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [feedback, setFeedback] = useState("");
+
+  const context = useContext(AppContext);
+
+  async function logUser(user) {
+    try {
+      const response = await axios.post("http://localhost:5000/users/", user);
+      console.log(response);
+      setIsLoading(false);
+      context.loginUser(username, response.data.token);
+    } catch (err) {
+      console.log(err.response);
+      setFeedback(err.response.data.message);
+      setIsLoading(false);
+    }
+  }
 
   function handleChange(event) {
     const name = event.target.name;
@@ -25,10 +41,11 @@ const Login = () => {
   function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log("banana");
-    }, 500);
+    const user = {
+      username,
+      password,
+    };
+    logUser(user);
   }
 
   return (
@@ -47,7 +64,7 @@ const Login = () => {
           Login {isLoading && <Spinner animation="border" className="ml-3" size="sm" />}
         </Button>
       </Form>
-      {feedback && <p>{feedback}</p>}
+      {feedback && <div className="login__error">{feedback}</div>}
       <Link to="/admin/register" className="mt-4 text-decoration-none text-reset">
         <p style={{ fontSize: "0.9em", borderTop: "1px solid lightgray", paddingTop: "1em" }}>Crear una cuenta de administrador</p>
       </Link>

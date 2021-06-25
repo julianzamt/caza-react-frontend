@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const token = localStorage.getItem("token");
+
 function postDocument({ title, subtitle, year, text, coverToUpload, imagesToUpload, section }) {
   const formData = new FormData();
   formData.append("title", title);
@@ -12,7 +14,7 @@ function postDocument({ title, subtitle, year, text, coverToUpload, imagesToUplo
   }
 
   return axios.post(`http://localhost:5000/${section}`, formData, {
-    headers: { "Content-Type": "multipart/form-data" },
+    headers: { "Content-Type": "multipart/form-data", "x-access-token": token },
   });
 }
 
@@ -20,12 +22,16 @@ function updateCover({ coverToUpload, section, documentId }) {
   const formData = new FormData();
   formData.append("cover", coverToUpload);
   return axios.put(`http://localhost:5000/${section}/${documentId}/update-cover`, formData, {
-    headers: { "Content-Type": "multipart/form-data" },
+    headers: { "Content-Type": "multipart/form-data", "x-access-token": token },
   });
 }
 
 function updateOrder({ images, documentId, section }) {
-  return axios.put(`http://localhost:5000/${section}/${documentId}/update-order`, images);
+  return axios.put(`http://localhost:5000/${section}/${documentId}/update-order`, images, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
 }
 
 function updateText({ title, subtitle, year, text, documentId, section }) {
@@ -36,7 +42,11 @@ function updateText({ title, subtitle, year, text, documentId, section }) {
     text: text,
   };
 
-  return axios.put(`http://localhost:5000/${section}/${documentId}/update-text`, data);
+  return axios.put(`http://localhost:5000/${section}/${documentId}/update-text`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
 }
 
 function updateImages({ imagesToUpload, documentId, section }) {
@@ -46,25 +56,42 @@ function updateImages({ imagesToUpload, documentId, section }) {
   }
 
   return axios.put(`http://localhost:5000/${section}/${documentId}/update-images`, formData, {
-    headers: { "Content-Type": "multipart/form-data" },
+    headers: { "Content-Type": "multipart/form-data", "x-access-token": token },
   });
 }
 
 function fetchCollection(section) {
-  return axios.get(`http://localhost:5000/${section}`);
+  return axios.get(`http://localhost:5000/${section}`, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
 }
 
 function fetchDocument({ section, id }) {
-  return axios.get(`http://localhost:5000/${section}/${id}`);
+  return axios.get(`http://localhost:5000/${section}/${id}`, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
 }
 
 function deleteDocument({ section, documentId }) {
-  return axios.delete(`http://localhost:5000/${section}/${documentId}`);
+  return axios.delete(`http://localhost:5000/${section}/${documentId}`, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
 }
 
 function deleteImage(section, documentId, imageId, key, coverFlag) {
   return axios.delete(
-    `http://localhost:5000/${section}/images/${key}?section=${section}&documentId=${documentId}&imageId=${imageId}&coverFlag=${coverFlag}`
+    `http://localhost:5000/${section}/images/${key}?section=${section}&documentId=${documentId}&imageId=${imageId}&coverFlag=${coverFlag}`,
+    {
+      headers: {
+        "x-access-token": token,
+      },
+    }
   );
 }
 
