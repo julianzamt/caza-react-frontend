@@ -10,5 +10,8 @@
 .register__error {
   font-size: small;
   color: red;
-  margin-top: 1em;
+  margin-top: 2em;
+  padding-left: 2em;
+  padding-right: 2em;
+  text-align: center;
 }

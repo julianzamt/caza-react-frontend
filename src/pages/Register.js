@@ -12,35 +12,30 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmation, setConfirmation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [mismatchError, setMismatchError] = useState(false);
-  const [registrationError, setRegistrationError] = useState(false);
+  const [feedback, setFeedback] = useState("");
   const [secretKey, setSecretKey] = useState("");
 
   const context = useContext(AppContext);
 
   async function createUser() {
     try {
-      setRegistrationError(false);
-      setMismatchError(false);
+      setFeedback("");
       if (password !== confirmation) {
-        return setMismatchError(true);
+        return setFeedback(errorMessages.MISMATCHERROR);
       }
       setIsLoading(true);
       const newUser = {
         username: username,
         password: password,
-        confirmation: confirmation,
         secretKey: secretKey,
       };
 
-      let response = await axios.post("http://localhost:5000/users/register", newUser);
-      console.log(response);
-
-      context.loginUser(username);
+      await axios.post("http://localhost:5000/users/register", newUser);
       setIsLoading(false);
+      context.loginUser(username);
     } catch (err) {
-      console.log(err);
-      setRegistrationError(true);
+      // console.log(JSON.stringify(err.response.data));
+      setFeedback(err.response.data.message);
       setIsLoading(false);
     }
   }
@@ -89,10 +84,7 @@ const Register = () => {
           Register {isLoading && <Spinner animation="border" variant="info" className="ml-3" />}
         </Button>
       </Form>
-      <div className="register__error">
-        {mismatchError && <span>{errorMessages.MISMATCHERROR}</span>}
-        {registrationError && <span>{errorMessages.ERROR}</span>}
-      </div>
+      {feedback && <div className="register__error">{feedback}</div>}
     </div>
   );
 };
