@@ -4,11 +4,11 @@ import { useState, useRef, useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import { deleteDocument, fetchCollection, updateCover, updateText, updateImages, updateOrder } from "../services/services";
-import { errorMessages } from "../utils/errorMessages";
+import { successMessages } from "../utils/successMessages";
 import CoverPreview from "../components/CoverPreview";
 import ImagePreview from "../components/ImagePreview";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import Modal from "react-bootstrap/Modal";
+import WarningModal from "./WarningModal";
 import "./EditForm.css";
 
 const EditForm = ({ setFeedback, section, setFormType }) => {
@@ -29,7 +29,7 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
   const [cover, setCover] = useState("");
   const [coverToUpload, setCoverToUpload] = useState("");
   const [disableNewOrderButton, setDisableNewOrderButton] = useState(true);
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showWarningModal, setShowWarningModal] = useState(false);
 
   const TEXT_LIMIT = 300;
   const TITLE_LIMIT = 25;
@@ -46,7 +46,7 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
       setCollection(res.data.map(item => item));
     } catch (e) {
       console.log(e);
-      setFeedback(e.message);
+      setFeedback(e.response.data.message);
     }
   }
 
@@ -61,7 +61,7 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
       setYear(document.year);
       setText(document.text);
       setImages(document.images);
-      setCover(document.cover[0]);
+      document.cover && setCover(document.cover[0]);
       setDisablePostText(true);
       setDisableNewOrderButton(true);
     }
@@ -84,12 +84,12 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
         coverRef.current.value = "";
         setCoverToUpload("");
         fetchSectionData();
-        setFeedback("Portada actualizada con éxito");
+        setFeedback(successMessages.GENERAL.editOk);
         setIsLoading(false);
       } catch (e) {
-        console.log(e.message);
+        console.log(e.response);
         coverRef.current.value = "";
-        setFeedback(errorMessages.ERROR);
+        setFeedback(e.response.data.message);
         setIsLoading(false);
       }
     } else if (action === "updateText") {
@@ -98,11 +98,11 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
         const updatedDocument = await updateText({ title, subtitle, year, text, section, documentId });
         setDocument(updatedDocument.data);
         fetchSectionData();
-        setFeedback("Texto actualizado con éxito");
+        setFeedback(successMessages.GENERAL.editOk);
         setIsLoading(false);
       } catch (e) {
-        console.log(e.message);
-        setFeedback(errorMessages.ERROR);
+        console.log(e.response);
+        setFeedback(e.response.data.message);
         setIsLoading(false);
       }
     } else if (action === "updateImages") {
@@ -113,12 +113,12 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
         imagesRef.current.value = "";
         setImagesToUpload("");
         fetchSectionData();
-        setFeedback("Imágenes actualizadas con éxito");
+        setFeedback(successMessages.GENERAL.editOk);
         setIsLoading(false);
       } catch (e) {
-        console.log(e.message);
+        console.log(e.response);
         imagesRef.current.value = "";
-        setFeedback(errorMessages.ERROR);
+        setFeedback(e.response.data.message);
         setIsLoading(false);
       }
     } else if (action === "updateOrder") {
@@ -127,23 +127,23 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
         const updatedDocument = await updateOrder({ images, section, documentId });
         setDocument(updatedDocument.data);
         fetchSectionData();
-        setFeedback("Orden guardado con éxito");
+        setFeedback(successMessages.GENERAL.editOk);
         setIsLoading(false);
       } catch (e) {
-        console.log(e.message);
-        setFeedback(errorMessages.ERROR);
+        console.log(e.response);
+        setFeedback(e.response.data.message);
         setIsLoading(false);
       }
     } else if (action === "deleteDocument") {
       const documentId = document._id;
       try {
         await deleteDocument({ section, documentId });
-        setFeedback("La entrada fue borrada con éxito.");
+        setFeedback(successMessages.GENERAL.deleteOk);
         setIsLoading(false);
         setFormType("");
       } catch (e) {
-        console.log(e);
-        setFeedback(errorMessages.ERROR);
+        console.log(e.response);
+        setFeedback(e.response.data.message);
         setIsLoading(false);
       }
     }
@@ -207,29 +207,27 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
   };
 
   const handleShow = () => {
-    setShowConfirmation(true);
-  };
-
-  const handleClose = () => {
-    setShowConfirmation(false);
+    setShowWarningModal(true);
   };
 
   return (
     <div>
-      <Form>
-        <Form.Label htmlFor="obra">Selecciona la entrada</Form.Label>
-        <Form.Control as="select" onChange={handleChange} name="obraSelect">
-          <option value="">---</option>
-          {collection &&
-            collection.map(document => (
-              <option value={document._id} key={document._id}>
-                {document.title}
-              </option>
-            ))}
-        </Form.Control>
+      <Form className="mb-2">
+        <Form.Group>
+          <Form.Label htmlFor="obra">Selecciona la entrada</Form.Label>
+          <Form.Control as="select" onChange={handleChange} name="obraSelect">
+            <option value="">---</option>
+            {collection &&
+              collection.map(document => (
+                <option value={document._id} key={document._id}>
+                  {document.title}
+                </option>
+              ))}
+          </Form.Control>
+        </Form.Group>
       </Form>
       {document && (
-        <div>
+        <div className="border-top pt-2">
           <Form onSubmit={handleSubmit} name="updateText">
             <Form.Group>
               <Form.Label htmlFor="title">Nombre corto para portada: </Form.Label>
@@ -243,6 +241,8 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
                 maxLength={TITLE_LIMIT}
               />
               {titleError && <Form.Text style={{ color: "red" }}>{`El título de portada no puede superar los ${TITLE_LIMIT} caracteres.`}</Form.Text>}
+            </Form.Group>
+            <Form.Group>
               <Form.Label htmlFor="subtitle">Nombre largo para texto interior: </Form.Label>
               <Form.Control
                 type="text"
@@ -256,9 +256,13 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
               {subtitleError && (
                 <Form.Text style={{ color: "red" }}>{`El título interior no puede superar los ${SUBTITLE_LIMIT} caracteres.`}</Form.Text>
               )}
+            </Form.Group>
+            <Form.Group>
               <Form.Label htmlFor="year">Año: </Form.Label>
               <Form.Control type="number" required name="year" value={year} onChange={handleChange} placeholder="Formato: yyyy" />
               {yearError && <Form.Text style={{ color: "red" }}>{`El año debe expresarse en ${YEAR_FIXED} caracteres.`}</Form.Text>}
+            </Form.Group>
+            <Form.Group>
               <Form.Label htmlFor="text">Texto interior: </Form.Label>
               <Form.Control
                 as="textarea"
@@ -271,16 +275,18 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
               />
               {textError && <Form.Text style={{ color: "red" }}>{`El texto principal no puede superar los ${TEXT_LIMIT} caracteres.`}</Form.Text>}
             </Form.Group>
-            {isLoading ? (
-              <Spinner animation="grow" />
-            ) : (
-              <Button size="sm" variant="info" type="submit" disabled={disablePostText}>
-                Guardar edición de texto
-              </Button>
-            )}
+            <Form.Group>
+              {isLoading ? (
+                <Spinner animation="grow" />
+              ) : (
+                <Button size="sm" variant="info" type="submit" disabled={disablePostText}>
+                  Guardar edición de texto
+                </Button>
+              )}
+            </Form.Group>
           </Form>
 
-          <Form onSubmit={handleSubmit} name="updateCover">
+          <Form onSubmit={handleSubmit} name="updateCover" className="border-top pt-2">
             <Form.Group>
               <p>Portada actual (eliminarla primero para poder elegir una nueva): </p>
               {cover ? (
@@ -288,9 +294,13 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
               ) : (
                 <p>No se ha seleccionado portada aún</p>
               )}
-              <Form.Label htmlFor="cover">Seleccione nueva portada: </Form.Label>
-              <FormFile ref={coverRef} onChange={handleChange} accept="image/*" name="cover" disabled={cover ? true : false} />
-
+            </Form.Group>
+            <Form.Group>
+              <Form.File>
+                <FormFile.Input ref={coverRef} onChange={handleChange} accept="image/*" name="cover" disabled={cover ? true : false} />
+              </Form.File>
+            </Form.Group>
+            <Form.Group>
               {isLoading ? (
                 <Spinner animation="grow" />
               ) : (
@@ -301,14 +311,14 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
             </Form.Group>
           </Form>
 
-          <Form onSubmit={handleSubmit} name="updateOrder">
+          <Form onSubmit={handleSubmit} name="updateOrder" className="border-top pt-2">
             <Form.Group>
-              <p>Imágenes interiores (Arrastrar y soltar para cambiar el orden):</p>
+              <p>Orden de imágenes interiores (Arrastrar y soltar):</p>
               <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="imagesPreview">
                   {provided => (
                     <ul {...provided.droppableProps} ref={provided.innerRef} className="editForm__droppable">
-                      {images.length ? (
+                      {images ? (
                         images.map((img, index) => (
                           <Draggable key={img._id} draggableId={img._id} index={index}>
                             {provided => (
@@ -326,6 +336,8 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
                   )}
                 </Droppable>
               </DragDropContext>
+            </Form.Group>
+            <Form.Group>
               {isLoading ? (
                 <Spinner animation="grow" />
               ) : (
@@ -336,11 +348,12 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
             </Form.Group>
           </Form>
 
-          <Form onSubmit={handleSubmit} name="updateImages">
+          <Form onSubmit={handleSubmit} name="updateImages" className="border-top pt-2">
+            <p>Agregar imágenes interiores (Se agregarán al final del orden actual):</p>
             <Form.Group>
-              <Form.Label htmlFor="images">Seleccione Imágenes (Se agregarán al final del orden actual):</Form.Label>
               <FormFile ref={imagesRef} onChange={handleChange} accept="image/*" name="images" multiple />
-
+            </Form.Group>
+            <Form.Group>
               {isLoading ? (
                 <Spinner animation="grow" />
               ) : (
@@ -351,31 +364,16 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
             </Form.Group>
           </Form>
 
-          <Form>
-            {isLoading ? (
-              <Spinner animation="grow" />
-            ) : (
-              <div>
-                <Button className="mt-2" variant="danger" size="sm" onClick={handleShow}>
-                  Eliminar entrada
-                </Button>
-              </div>
-            )}
-            <Modal show={showConfirmation} onHide={handleClose} centered>
-              <Modal.Header closeButton>
-                <Modal.Title>¡Cuidado!</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>La entrada se eliminará definitivamente.</Modal.Body>
-              <Modal.Footer>
-                <Button variant="danger" onClick={handleSubmit} name="deleteDocument">
-                  Eliminar definitivamente
-                </Button>
-                <Button variant="secondary" onClick={handleClose}>
-                  Volver
-                </Button>
-              </Modal.Footer>
-            </Modal>
-          </Form>
+          {isLoading ? (
+            <Spinner animation="grow" />
+          ) : (
+            <div>
+              <Button className="mt-5" variant="danger" size="sm" block onClick={handleShow}>
+                Eliminar entrada
+              </Button>
+            </div>
+          )}
+          <WarningModal showWarningModal={showWarningModal} setShowWarningModal={setShowWarningModal} handleSubmit={handleSubmit} />
         </div>
       )}
     </div>

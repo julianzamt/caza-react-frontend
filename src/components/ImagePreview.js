@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import { deleteImage } from "../services/services";
-import { errorMessages } from "../utils/errorMessages";
+import { successMessages } from "../utils/successMessages";
 import Spinner from "react-bootstrap/Spinner";
 import "./ImagePreview.css";
 
@@ -15,12 +15,12 @@ const ImagePreview = ({ img, document, setFeedback, setDocument, section }) => {
     console.log(section, +" " + document._id, +" " + imageId, +" " + key);
     try {
       const updatedDocument = await deleteImage(section, document._id, imageId, key);
-      setFeedback("Imagen borrada con éxito");
+      setFeedback(successMessages.GENERAL.editOk);
       setIsLoading(false);
       setDocument(updatedDocument.data);
     } catch (e) {
-      console.log(e);
-      setFeedback(errorMessages.ERROR);
+      console.log(e.response);
+      setFeedback(e.response.data.message);
       setIsLoading(false);
     }
   };

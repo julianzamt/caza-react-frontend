@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import AppContext from "./context/AppContext";
 import Home from "./pages/Home";
 import SectionCovers from "./pages/SectionCovers";
 import SectionInside from "./pages/SectionInside";
@@ -10,9 +12,11 @@ import Admin from "./pages/Admin";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Switch, Route } from "react-router";
+import { Redirect } from "react-router-dom";
 import "./App.css";
 
 const App = () => {
+  const context = useContext(AppContext);
   return (
     <>
       <div className="app__container">
@@ -28,7 +32,7 @@ const App = () => {
             <Route exact path="/producto" component={Producto} />
             <Route exact path="/documentacion" component={Documentacion} />
             <Route exact path="/aboutus" component={AboutUs} />
-            <Route exact path="/admin" component={Admin} />
+            <Route exact path="/admin" render={() => (context.login ? <Admin /> : <Redirect to="/admin/login" />)} />
             <Route exact path="/admin/login" component={Login} />
             <Route exact path="/admin/register" component={Register} />
             <Route path="/:section/:id" component={SectionInside} />

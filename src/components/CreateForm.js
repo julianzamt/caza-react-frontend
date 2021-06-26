@@ -4,9 +4,9 @@ import { useState, useRef } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import { postDocument } from "../services/services";
-import { errorMessages } from "../utils/errorMessages";
+import { successMessages } from "../utils/successMessages";
 
-const CreateForm = ({ section, setFeedback, fetchSectionData, setFormType }) => {
+const CreateForm = ({ section, setFeedback, setFormType }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -37,14 +37,14 @@ const CreateForm = ({ section, setFeedback, fetchSectionData, setFormType }) => 
       await postDocument({ title, subtitle, year, text, coverToUpload, imagesToUpload, section });
       coverRef.current.value = "";
       imagesRef.current.value = "";
-      setFeedback("Entrada creada con éxito");
+      setFeedback(successMessages.GENERAL.createOk);
       setIsLoading(false);
       setFormType("");
     } catch (e) {
       coverRef.current.value = "";
       imagesRef.current.value = "";
-      console.log(e);
-      setFeedback(errorMessages.ERROR);
+      console.log(e.response);
+      setFeedback(e.response.data.message);
       setIsLoading(false);
     }
   };
@@ -101,6 +101,8 @@ const CreateForm = ({ section, setFeedback, fetchSectionData, setFormType }) => 
         <Form.Label htmlFor="title">Nombre corto para portada: </Form.Label>
         <Form.Control type="text" required name="title" value={title} onChange={handleChange} placeholder="Nombre corto" maxLength={TITLE_LIMIT} />
         {titleError && <Form.Text style={{ color: "red" }}>{`El título de portada no puede superar los ${TITLE_LIMIT} caracteres.`}</Form.Text>}
+      </Form.Group>
+      <Form.Group>
         <Form.Label htmlFor="subtitle">Nombre largo para texto interior: </Form.Label>
         <Form.Control
           type="text"
@@ -112,9 +114,13 @@ const CreateForm = ({ section, setFeedback, fetchSectionData, setFormType }) => 
           maxLength={SUBTITLE_LIMIT}
         />
         {subtitleError && <Form.Text style={{ color: "red" }}>{`El título interior no puede superar los ${SUBTITLE_LIMIT} caracteres.`}</Form.Text>}
+      </Form.Group>
+      <Form.Group>
         <Form.Label htmlFor="year">Año: </Form.Label>
-        <Form.Control type="number" required name="year" value={year} onChange={handleChange} placeholder="Formato: yyyy" />
+        <Form.Control type="number" required name="year" value={year} onChange={handleChange} placeholder="Año" />
         {yearError && <Form.Text style={{ color: "red" }}>{`El año debe expresarse en ${YEAR_FIXED} caracteres.`}</Form.Text>}
+      </Form.Group>
+      <Form.Group>
         <Form.Label htmlFor="text">Texto interior: </Form.Label>
         <Form.Control as="textarea" required name="text" value={text} onChange={handleChange} placeholder="Texto interior" maxLength={TEXT_LIMIT} />
         {textError && <Form.Text style={{ color: "red" }}>{`El texto principal no puede superar los ${TEXT_LIMIT} caracteres.`}</Form.Text>}
@@ -131,7 +137,7 @@ const CreateForm = ({ section, setFeedback, fetchSectionData, setFormType }) => 
       {isLoading ? (
         <Spinner animation="grow" />
       ) : (
-        <Button type="submit" disabled={disableButton}>
+        <Button type="submit" disabled={disableButton} block className="mt-5">
           Crear entrada
         </Button>
       )}

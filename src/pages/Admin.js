@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import CreateForm from "../components/CreateForm";
 import DocumentacionCreateForm from "../components/DocumentacionCreateForm";
@@ -7,18 +7,17 @@ import EditForm from "../components/EditForm";
 import Button from "react-bootstrap/Button";
 import "./Admin.css";
 import AppContext from "../context/AppContext";
+import FeedbackModal from "../components/FeedbackModal";
 
 const Admin = () => {
   const [formType, setFormType] = useState("");
-  const [feedback, setFeedback] = useState(false);
   const [section, setSection] = useState("");
+  const [feedback, setFeedback] = useState("");
 
   const context = useContext(AppContext);
 
   const handleClick = event => {
     const formTypeSelection = event.target.id;
-    console.log(formTypeSelection);
-    console.log(section);
     setFeedback("");
     // special cases
     if (section === "documentacion") {
@@ -41,7 +40,7 @@ const Admin = () => {
   return (
     <div className="admin__container">
       <h2 className="text-center">Admin</h2>
-      <h6 className="text-right mt-2 mb-2">
+      <h6 className="text-right mt-4 mb-4">
         Hola, {context.username}. | <span onClick={() => context.logoutUser()}>Cerrar sesión</span>
       </h6>
       <Form>
@@ -58,12 +57,12 @@ const Admin = () => {
       </Form>
       {section && (
         <div>
-          <h1 style={{ textTransform: "capitalize", textAlign: "center", margin: "0.5em" }}>{section}</h1>
+          <h1 style={{ textTransform: "capitalize", textAlign: "center", marginTop: "0.8em", marginBottom: "1em" }}>{section}</h1>
           <div className="admin__button-container">
-            <Button id="createForm" onClick={handleClick}>
+            <Button id="createForm" onClick={handleClick} variant="outline-info">
               Crear nueva entrada
             </Button>
-            <Button id="editForm" onClick={handleClick}>
+            <Button id="editForm" onClick={handleClick} variant="outline-info">
               Editar entrada
             </Button>
           </div>
@@ -73,7 +72,7 @@ const Admin = () => {
       {formType === "documentacionCreateForm" && <DocumentacionCreateForm section={section} setFeedback={setFeedback} setFormType={setFormType} />}
       {formType === "editForm" && <EditForm setFeedback={setFeedback} section={section} setFormType={setFormType} />}
       {formType === "documentacionEditForm" && <DocumentacionEditForm setFeedback={setFeedback} section={section} setFormType={setFormType} />}
-      {<div>{feedback}</div>}
+      {feedback && <FeedbackModal feedback={feedback} setFeedback={setFeedback} />}
     </div>
   );
 };

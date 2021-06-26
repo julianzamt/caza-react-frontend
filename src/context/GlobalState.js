@@ -3,9 +3,8 @@ import { useHistory } from "react-router-dom";
 import AppContext from "./AppContext";
 
 const GlobalState = props => {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(localStorage.getItem("login") || false);
   const [username, setUsername] = useState(localStorage.getItem("username"));
-  const [token, setToken] = useState(localStorage.getItem("token"));
   const history = useHistory();
 
   const loginUser = (username, token) => {
@@ -14,16 +13,14 @@ const GlobalState = props => {
     localStorage.setItem("token", token);
     setLogin(true);
     setUsername(username);
-    setToken(token);
     history.push("/admin");
   };
 
   const logoutUser = () => {
-    localStorage.setItem("login", false);
+    localStorage.setItem("login", "");
     localStorage.setItem("token", "");
     localStorage.setItem("username", "");
     setUsername("");
-    setToken("");
     setLogin(false);
     history.push("/");
   };
@@ -33,7 +30,6 @@ const GlobalState = props => {
       value={{
         login,
         username,
-        token,
         loginUser,
         logoutUser,
       }}>
