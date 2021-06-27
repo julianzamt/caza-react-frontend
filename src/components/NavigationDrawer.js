@@ -60,7 +60,7 @@ export default function TemporaryDrawer({ showDrawer, setShowDrawer }) {
     { text: "Obras", path: "/obras" },
     { text: "Proyectos", path: "/proyectos" },
     { text: "Equipamientos", path: "/equipamientos" },
-    { text: "Producto", path: "/producto" },
+    { text: "Productos", path: "/productos" },
     { text: "Documentación", path: "/documentacion" },
     { text: "Nosotras", path: "/aboutus" },
   ];

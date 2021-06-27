@@ -4,7 +4,7 @@ import AppContext from "../context/AppContext";
 import "./Register.css";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
-import { errorMessages } from "../utils/errorMessages";
+import { errorMessages } from "../utils/feedbackMessages";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -34,9 +34,14 @@ const Register = () => {
       await axios.post("http://localhost:5000/users/register", newUser);
       setIsLoading(false);
       context.loginUser(username);
-    } catch (err) {
-      // console.log(JSON.stringify(err.response.data));
-      setFeedback(err.response.data.message);
+    } catch (e) {
+      if (e.response) {
+        console.log(e.response);
+        setFeedback(e.response.data.message);
+      } else {
+        console.log(e);
+        setFeedback(errorMessages.NO_CONNECTION);
+      }
       setIsLoading(false);
     }
   }

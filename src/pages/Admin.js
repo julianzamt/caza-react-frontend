@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import CreateForm from "../components/CreateForm";
 import DocumentacionCreateForm from "../components/DocumentacionCreateForm";
@@ -50,7 +50,7 @@ const Admin = () => {
           <option value="obras">Obras</option>
           <option value="proyectos">Proyectos</option>
           <option value="equipamientos">Equipamientos</option>
-          <option value="productos">Producto</option>
+          <option value="productos">Productos</option>
           <option value="documentacion">Documentación</option>
           <option value="nosotras">Nosotras</option>
         </Form.Control>

@@ -3,3 +3,8 @@
   margin: 0;
   padding: 0;
 }
+
+.editForm__saving_container {
+  display: flex;
+  align-items: center;
+}

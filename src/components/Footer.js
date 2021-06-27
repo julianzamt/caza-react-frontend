@@ -1,6 +1,4 @@
 import "./Footer.css";
-import PhoneInTalkIcon from "@material-ui/icons/PhoneInTalk";
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import FacebookIcon from "@material-ui/icons/Facebook";
 

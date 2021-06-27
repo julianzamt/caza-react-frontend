@@ -3,7 +3,6 @@ import AppContext from "./context/AppContext";
 import Home from "./pages/Home";
 import SectionCovers from "./pages/SectionCovers";
 import SectionInside from "./pages/SectionInside";
-import Producto from "./pages/Producto";
 import Documentacion from "./pages/Documentacion";
 import AboutUs from "./pages/AboutUs";
 import Login from "./pages/Login";
@@ -29,8 +28,8 @@ const App = () => {
             <Route exact path="/obras" render={() => <SectionCovers section="obras" />} />
             <Route exact path="/proyectos" render={() => <SectionCovers section="proyectos" />} />
             <Route exact path="/equipamientos" render={() => <SectionCovers section="equipamientos" />} />
-            <Route exact path="/producto" component={Producto} />
-            <Route exact path="/documentacion" component={Documentacion} />
+            <Route exact path="/productos" render={() => <SectionCovers section="productos" />} />
+            <Route exact path="/documentacion" render={() => <Documentacion section="documentacion" />} />
             <Route exact path="/aboutus" component={AboutUs} />
             <Route exact path="/admin" render={() => (context.login ? <Admin /> : <Redirect to="/admin/login" />)} />
             <Route exact path="/admin/login" component={Login} />

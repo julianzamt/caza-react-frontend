@@ -1,19 +1,44 @@
 import Form from "react-bootstrap/Form";
 import FormFile from "react-bootstrap/FormFile";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
-import { postDocument } from "../services/services";
-import { errorMessages } from "../utils/errorMessages";
+import { postDocument, fetchCollection } from "../services/services";
+import { successMessages, errorMessages } from "../utils/feedbackMessages";
 
-const DocumentacionCreateForm = ({ section, setFeedback, fetchSectionData, setFormType }) => {
+const DocumentacionCreateForm = ({ section, setFeedback, setFormType }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState("");
   const [imagesToUpload, setImagesToUpload] = useState("");
   const [textError, setTextError] = useState(false);
   const [disableButton, setDisableButton] = useState(false);
+  const [disableForm, setDisableForm] = useState(false);
 
   const TEXT_LIMIT = 300;
+
+  async function fetchSectionData() {
+    try {
+      setIsLoading(true);
+      const res = await fetchCollection(section);
+      if (res.data.length) {
+        setDisableForm(true);
+      }
+      setIsLoading(false);
+    } catch (e) {
+      if (e.response) {
+        console.log(e.response);
+        setFeedback(e.response.data.message);
+      } else {
+        console.log(e);
+        setFeedback(errorMessages.NO_CONNECTION);
+      }
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchSectionData();
+  }, []);
 
   // Set references to Input Fields for reset
   const imagesRef = useRef();
@@ -24,14 +49,19 @@ const DocumentacionCreateForm = ({ section, setFeedback, fetchSectionData, setFo
     setIsLoading(true);
     try {
       await postDocument({ text, imagesToUpload, section });
-      imagesRef.current.value = "";
-      setFeedback("Entrada creada con éxito");
+      if (imagesRef.current) imagesRef.current.value = "";
+      setFeedback(successMessages.GENERAL.createOk);
       setIsLoading(false);
       setFormType("");
     } catch (e) {
-      imagesRef.current.value = "";
-      console.log(e);
-      setFeedback(errorMessages.ERROR);
+      if (e.response) {
+        if (imagesRef.current) imagesRef.current.value = "";
+        console.log(e.response);
+        setFeedback(e.response.data.message);
+      } else {
+        console.log(e);
+        setFeedback(errorMessages.NO_CONNECTION);
+      }
       setIsLoading(false);
     }
   };
@@ -53,25 +83,50 @@ const DocumentacionCreateForm = ({ section, setFeedback, fetchSectionData, setFo
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group>
-        <Form.Label htmlFor="text">Texto interior: </Form.Label>
-        <Form.Control as="textarea" required name="text" value={text} onChange={handleChange} placeholder="Texto interior" maxLength={TEXT_LIMIT} />
-        {textError && <Form.Text style={{ color: "red" }}>{`El texto principal no puede superar los ${TEXT_LIMIT} caracteres.`}</Form.Text>}
-      </Form.Group>
-      <Form.Group>
-        <FormFile.Label htmlFor="images">Imágenes interiores: </FormFile.Label>
-        <Form.File ref={imagesRef} onChange={handleChange} accept="image/*" name="images" multiple />
-      </Form.Group>
-
+    <div>
       {isLoading ? (
-        <Spinner animation="grow" />
+        <div className="text-center">
+          <Spinner animation="border" />
+        </div>
       ) : (
-        <Button type="submit" disabled={disableButton}>
-          Crear entrada
-        </Button>
+        <div>
+          {disableForm ? (
+            <div style={{ color: "red", textAlign: "center" }}>
+              Sólo puede crearse una única entrada en esta sección. Edite la actual o elimínela para crear una nueva.
+            </div>
+          ) : (
+            <Form onSubmit={handleSubmit}>
+              <Form.Group>
+                <Form.Label htmlFor="text">Texto interior: </Form.Label>
+                <Form.Control
+                  as="textarea"
+                  required
+                  name="text"
+                  value={text}
+                  onChange={handleChange}
+                  placeholder="Texto interior"
+                  maxLength={TEXT_LIMIT}
+                />
+                {textError && <Form.Text style={{ color: "red" }}>{`El texto principal no puede superar los ${TEXT_LIMIT} caracteres.`}</Form.Text>}
+              </Form.Group>
+              <Form.Group>
+                <FormFile.Label htmlFor="images">Imágenes interiores: </FormFile.Label>
+                <Form.File ref={imagesRef} onChange={handleChange} accept="image/*" name="images" multiple />
+              </Form.Group>
+              <Form.Group>
+                {isLoading ? (
+                  <Spinner animation="grow" />
+                ) : (
+                  <Button type="submit" disabled={disableButton} block className="mt-5">
+                    Crear entrada
+                  </Button>
+                )}
+              </Form.Group>
+            </Form>
+          )}
+        </div>
       )}
-    </Form>
+    </div>
   );
 };
 

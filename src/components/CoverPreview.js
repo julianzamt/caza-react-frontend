@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import { deleteImage } from "../services/services";
-import { successMessages } from "../utils/successMessages";
+import { successMessages, errorMessages } from "../utils/feedbackMessages";
 import Spinner from "react-bootstrap/Spinner";
 
 const CoverPreview = ({ img, document, setFeedback, setDocument, section }) => {
@@ -18,8 +18,13 @@ const CoverPreview = ({ img, document, setFeedback, setDocument, section }) => {
       setIsLoading(false);
       setDocument(updatedDocument.data);
     } catch (e) {
-      console.log(e.response);
-      setFeedback(e.response.data.message);
+      if (e.response) {
+        console.log(e.response);
+        setFeedback(e.response.data.message);
+      } else {
+        console.log(e);
+        setFeedback(errorMessages.NO_CONNECTION);
+      }
       setIsLoading(false);
     }
   };

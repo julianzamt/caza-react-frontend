@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { Link } from "react-router-dom";
 import AppContext from "../context/AppContext";
+import { errorMessages } from "../utils/feedbackMessages";
 import axios from "axios";
 import "./Login.css";
 
@@ -21,9 +22,14 @@ const Login = () => {
       console.log(response);
       setIsLoading(false);
       context.loginUser(username, response.data.token);
-    } catch (err) {
-      console.log(err.response);
-      setFeedback(err.response.data.message);
+    } catch (e) {
+      if (e.response) {
+        console.log(e.response);
+        setFeedback(e.response.data.message);
+      } else {
+        console.log(e);
+        setFeedback(errorMessages.NO_CONNECTION);
+      }
       setIsLoading(false);
     }
   }

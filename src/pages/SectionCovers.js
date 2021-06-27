@@ -16,13 +16,14 @@ const SectionCovers = ({ section }) => {
       setCovers(
         collection.data.map(document => (
           <Link to={`/${section}/${document._id}`} key={document._id}>
-            <Cover path={document.cover[0] ? document.cover[0].path : null} title={document.title} section={section} />
+            <Cover path={document.cover[0] && document.cover[0].path} title={document.title} section={section} />
           </Link>
         ))
       );
       setIsLoading(false);
     } catch (e) {
       console.log(e);
+      setIsLoading(false);
     }
   }
 

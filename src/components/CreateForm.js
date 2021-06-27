@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import { postDocument } from "../services/services";
-import { successMessages } from "../utils/successMessages";
+import { successMessages, errorMessages } from "../utils/feedbackMessages";
 
 const CreateForm = ({ section, setFeedback, setFormType }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,10 +41,15 @@ const CreateForm = ({ section, setFeedback, setFormType }) => {
       setIsLoading(false);
       setFormType("");
     } catch (e) {
-      coverRef.current.value = "";
-      imagesRef.current.value = "";
-      console.log(e.response);
-      setFeedback(e.response.data.message);
+      if (e.response) {
+        coverRef.current.value = "";
+        imagesRef.current.value = "";
+        console.log(e.response);
+        setFeedback(e.response.data.message);
+      } else {
+        console.log(e);
+        setFeedback(errorMessages.NO_CONNECTION);
+      }
       setIsLoading(false);
     }
   };
@@ -135,7 +140,9 @@ const CreateForm = ({ section, setFeedback, setFormType }) => {
       </Form.Group>
 
       {isLoading ? (
-        <Spinner animation="grow" />
+        <div className="editForm__saving_container mt-5">
+          <Spinner animation="grow" variant="success" /> &nbsp; &nbsp;Guardando. Esto puede demorar unos minutos.
+        </div>
       ) : (
         <Button type="submit" disabled={disableButton} block className="mt-5">
           Crear entrada

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import { deleteImage } from "../services/services";
-import { successMessages } from "../utils/successMessages";
+import { successMessages, errorMessages } from "../utils/feedbackMessages";
 import Spinner from "react-bootstrap/Spinner";
 import "./ImagePreview.css";
 
@@ -16,11 +16,16 @@ const ImagePreview = ({ img, document, setFeedback, setDocument, section }) => {
     try {
       const updatedDocument = await deleteImage(section, document._id, imageId, key);
       setFeedback(successMessages.GENERAL.editOk);
-      setIsLoading(false);
       setDocument(updatedDocument.data);
+      setIsLoading(false);
     } catch (e) {
-      console.log(e.response);
-      setFeedback(e.response.data.message);
+      if (e.response) {
+        console.log(e.response);
+        setFeedback(e.response.data.message);
+      } else {
+        console.log(e);
+        setFeedback(errorMessages.NO_CONNECTION);
+      }
       setIsLoading(false);
     }
   };
