@@ -57,6 +57,7 @@ export default function TemporaryDrawer({ showDrawer, setShowDrawer }) {
   );
 
   const links = [
+    { text: "Home", path: "/" },
     { text: "Obras", path: "/obras" },
     { text: "Proyectos", path: "/proyectos" },
     { text: "Equipamientos", path: "/equipamientos" },

@@ -24,3 +24,7 @@
   text-align: justify;
   font-size: smaller;
 }
+
+.sectionInside__hidden {
+  display: none;
+}

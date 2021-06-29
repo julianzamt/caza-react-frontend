@@ -1,13 +1,13 @@
 import "./SectionInsideImage.css";
 
-const SectionInsideImage = ({ section, path }) => {
+const SectionInsideImage = ({ section, path, setLoadCount }) => {
   return (
     <div className="sectionInsideImage__container">
       <img
         className="sectionInsideImage__image"
         src={`http://localhost:5000/${section}/images/${path}`}
         alt={`imagen de ${section}`}
-        onLoad={event => (event.target.style.visibility = "visible")}
+        onLoad={() => setLoadCount(prev => prev + 1)}
       />
     </div>
   );

@@ -3,7 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import NavigationDrawer from "./NavigationDrawer";
-import ListIcon from "@material-ui/icons/List";
+import MenuIcon from "@material-ui/icons/Menu";
 import { ReactComponent as CazaIcon } from "../icons/logo.svg";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
@@ -26,7 +26,7 @@ export default function Navbar() {
             </div>
           </Link>
           <IconButton color="inherit" aria-label="menu" onClick={handleClick}>
-            <ListIcon color="primary" />
+            <MenuIcon color="primary" />
           </IconButton>
         </Toolbar>
         <NavigationDrawer showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
