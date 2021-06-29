@@ -32,8 +32,9 @@ const Register = () => {
       };
 
       await axios.post("http://localhost:5000/users/register", newUser);
+      const response = await axios.post("http://localhost:5000/users/", { username, password });
       setIsLoading(false);
-      context.loginUser(username);
+      context.loginUser(username, response.data.token);
     } catch (e) {
       if (e.response) {
         console.log(e.response);

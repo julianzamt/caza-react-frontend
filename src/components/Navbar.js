@@ -19,12 +19,12 @@ export default function Navbar() {
     <div>
       <AppBar position="static" color="transparent" elevation={0}>
         <Toolbar className="navbar__container">
-          <Link to="/" className="navbar__logoAndTitle__container">
+          {/* <Link to="/" className="navbar__logoAndTitle__container">
             <CazaIcon className="cazaicon" />
             <div className="title__container">
               <div className="title">CAZA ESTUDIO</div>
             </div>
-          </Link>
+          </Link> */}
           <IconButton color="inherit" aria-label="menu" onClick={handleClick}>
             <MenuIcon color="primary" />
           </IconButton>

@@ -13,6 +13,7 @@ const DocumentacionCreateForm = ({ section, setFeedback, setFormType }) => {
   const [textError, setTextError] = useState(false);
   const [disableButton, setDisableButton] = useState(false);
   const [disableForm, setDisableForm] = useState(false);
+  const [isSavingDocument, setIsSavingDocument] = useState(false);
 
   const TEXT_LIMIT = 300;
 
@@ -46,12 +47,12 @@ const DocumentacionCreateForm = ({ section, setFeedback, setFormType }) => {
   const handleSubmit = async event => {
     event.preventDefault();
     setFeedback("");
-    setIsLoading(true);
+    setIsSavingDocument(true);
     try {
       await postDocument({ text, imagesToUpload, section });
       if (imagesRef.current) imagesRef.current.value = "";
       setFeedback(successMessages.GENERAL.createOk);
-      setIsLoading(false);
+      setIsSavingDocument(false);
       setFormType("");
     } catch (e) {
       if (e.response) {
@@ -62,7 +63,7 @@ const DocumentacionCreateForm = ({ section, setFeedback, setFormType }) => {
         console.log(e);
         setFeedback(errorMessages.NO_CONNECTION);
       }
-      setIsLoading(false);
+      setIsSavingDocument(false);
     }
   };
 
@@ -114,8 +115,10 @@ const DocumentacionCreateForm = ({ section, setFeedback, setFormType }) => {
                 <Form.File ref={imagesRef} onChange={handleChange} accept="image/*" name="images" multiple />
               </Form.Group>
               <Form.Group>
-                {isLoading ? (
-                  <Spinner animation="grow" />
+                {isSavingDocument ? (
+                  <div className="editForm__saving_container mt-5">
+                    <Spinner animation="grow" variant="success" /> &nbsp; &nbsp;Guardando. Esto puede demorar unos minutos.
+                  </div>
                 ) : (
                   <Button type="submit" disabled={disableButton} block className="mt-5">
                     Crear entrada

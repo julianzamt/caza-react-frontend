@@ -8,7 +8,7 @@ import { successMessages, errorMessages } from "../utils/feedbackMessages";
 import ImagePreview from "../components/ImagePreview";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import WarningModal from "./WarningModal";
-import "./EditForm.css";
+import "./DocumentacionEditForm.css";
 
 const DocumentacionEditForm = ({ setFeedback, section, setFormType }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,6 +20,10 @@ const DocumentacionEditForm = ({ setFeedback, section, setFormType }) => {
   const [imagesToUpload, setImagesToUpload] = useState("");
   const [disableNewOrderButton, setDisableNewOrderButton] = useState(true);
   const [showWarningModal, setShowWarningModal] = useState(false);
+  const [isSavingText, setIsSavingText] = useState(false);
+  const [isSavingImages, setIsSavingImages] = useState(false);
+  const [isSavingOrder, setIsSavingOrder] = useState(false);
+  const [isDeletingDocument, setIsDeletingDocument] = useState(false);
 
   const TEXT_LIMIT = 300;
 
@@ -65,15 +69,15 @@ const DocumentacionEditForm = ({ setFeedback, section, setFormType }) => {
     event.preventDefault();
     const action = event.target.name;
     setFeedback("");
-    setIsLoading(true);
     if (action === "updateText") {
       const documentId = document._id;
+      setIsSavingText(true);
       try {
         const updatedDocument = await updateText({ text, section, documentId });
         setDocument(updatedDocument.data);
         fetchSectionData();
         setFeedback(successMessages.GENERAL.editOk);
-        setIsLoading(false);
+        setIsSavingText(false);
       } catch (e) {
         if (e.response) {
           console.log(e.response);
@@ -82,10 +86,11 @@ const DocumentacionEditForm = ({ setFeedback, section, setFormType }) => {
           console.log(e);
           setFeedback(errorMessages.NO_CONNECTION);
         }
-        setIsLoading(false);
+        setIsSavingText(false);
       }
     } else if (action === "updateImages") {
       const documentId = document._id;
+      setIsSavingImages(true);
       try {
         const updatedDocument = await updateImages({ imagesToUpload, section, documentId });
         setDocument(updatedDocument.data);
@@ -93,7 +98,7 @@ const DocumentacionEditForm = ({ setFeedback, section, setFormType }) => {
         setImagesToUpload("");
         fetchSectionData();
         setFeedback(successMessages.GENERAL.editOk);
-        setIsLoading(false);
+        setIsSavingImages(false);
       } catch (e) {
         if (e.response) {
           console.log(e.response);
@@ -103,16 +108,17 @@ const DocumentacionEditForm = ({ setFeedback, section, setFormType }) => {
           console.log(e);
           setFeedback(errorMessages.NO_CONNECTION);
         }
-        setIsLoading(false);
+        setIsSavingImages(false);
       }
     } else if (action === "updateOrder") {
       const documentId = document._id;
+      setIsSavingOrder(true);
       try {
         const updatedDocument = await updateOrder({ images, section, documentId });
         setDocument(updatedDocument.data);
         fetchSectionData();
         setFeedback(successMessages.GENERAL.editOk);
-        setIsLoading(false);
+        setIsSavingOrder(false);
       } catch (e) {
         if (e.response) {
           console.log(e.response);
@@ -121,14 +127,15 @@ const DocumentacionEditForm = ({ setFeedback, section, setFormType }) => {
           console.log(e);
           setFeedback(errorMessages.NO_CONNECTION);
         }
-        setIsLoading(false);
+        setIsSavingOrder(false);
       }
     } else if (action === "deleteDocument") {
       const documentId = document._id;
+      setIsDeletingDocument(true);
       try {
         await deleteDocument({ section, documentId });
         setFeedback(successMessages.GENERAL.deleteOk);
-        setIsLoading(false);
+        setIsDeletingDocument(false);
         setFormType("");
       } catch (e) {
         if (e.response) {
@@ -138,7 +145,7 @@ const DocumentacionEditForm = ({ setFeedback, section, setFormType }) => {
           console.log(e);
           setFeedback(errorMessages.NO_CONNECTION);
         }
-        setIsLoading(false);
+        setIsDeletingDocument(false);
       }
     }
   };
@@ -196,8 +203,10 @@ const DocumentacionEditForm = ({ setFeedback, section, setFormType }) => {
                   {textError && <Form.Text style={{ color: "red" }}>{`El texto principal no puede superar los ${TEXT_LIMIT} caracteres.`}</Form.Text>}
                 </Form.Group>
                 <Form.Group>
-                  {isLoading ? (
-                    <Spinner animation="grow" />
+                  {isSavingText ? (
+                    <div className="documentacionEditForm__saving_container">
+                      <Spinner animation="grow" variant="success" /> &nbsp; Guardando. Esto puede demorar unos minutos.
+                    </div>
                   ) : (
                     <Button size="sm" variant="info" type="submit" disabled={disablePostText}>
                       Guardar edición de texto
@@ -238,8 +247,10 @@ const DocumentacionEditForm = ({ setFeedback, section, setFormType }) => {
                   </DragDropContext>
                 </Form.Group>
                 <Form.Group>
-                  {isLoading ? (
-                    <Spinner animation="grow" />
+                  {isSavingOrder ? (
+                    <div className="documentacionEditForm__saving_container">
+                      <Spinner animation="grow" variant="success" /> &nbsp; Guardando. Esto puede demorar unos minutos.
+                    </div>
                   ) : (
                     <Button size="sm" variant="info" type="submit" disabled={disableNewOrderButton}>
                       Guardar Nuevo Orden
@@ -253,8 +264,10 @@ const DocumentacionEditForm = ({ setFeedback, section, setFormType }) => {
                   <Form.Label htmlFor="images">Agregar imágenes interiores (Se agregarán al final del orden actual):</Form.Label>
                   <FormFile ref={imagesRef} onChange={handleChange} accept="image/*" name="images" multiple />
 
-                  {isLoading ? (
-                    <Spinner animation="grow" />
+                  {isSavingImages ? (
+                    <div className="documentacionEditForm__saving_container mb-5 mt-2">
+                      <Spinner animation="grow" variant="success" /> &nbsp; Guardando. Esto puede demorar unos minutos.
+                    </div>
                   ) : (
                     <Button className="mb-5" size="sm" variant="info" type="submit" disabled={imagesToUpload ? false : true}>
                       Guardar Nuevas Imágenes
@@ -263,8 +276,10 @@ const DocumentacionEditForm = ({ setFeedback, section, setFormType }) => {
                 </Form.Group>
               </Form>
               <Form.Group>
-                {isLoading ? (
-                  <Spinner animation="grow" />
+                {isDeletingDocument ? (
+                  <div className="documentacionEditForm__saving_container">
+                    <Spinner animation="grow" variant="danger" /> &nbsp; &nbsp; Eliminando entrada. Esto puede demorar unos minutos.
+                  </div>
                 ) : (
                   <div>
                     <Button block variant="danger" size="sm" onClick={handleShow}>
