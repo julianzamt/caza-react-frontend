@@ -5,7 +5,7 @@
   padding: 1em;
 }
 
-.navbar__logoAndTitle__container {
+/* .navbar__logoAndTitle__container {
   display: flex;
   align-items: center;
   text-decoration: none !important;
@@ -24,4 +24,11 @@
 .cazaicon {
   width: 2em;
   margin-right: 0.5em;
+} */
+
+/* Tablets */
+@media (min-width: 768px) {
+  .navBar__iconButton {
+    height: 200px;
+  }
 }

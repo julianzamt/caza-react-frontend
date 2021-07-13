@@ -10,18 +10,31 @@
 .home__options {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
   margin: 2em 0 2em 0;
 }
 
 .home__item {
-  color: #585858;
-  font-size: 1.5em;
-  font-family: "Source Sans Pro";
+  color: rgb(57, 57, 57);
+  font-size: 1.1em;
+  line-height: 2em;
 }
 
 .home__item:hover {
-  color: #e2e2c7;
+  color: #cbcba4;
   text-decoration: none;
+}
+
+/* Tablets */
+@media (min-width: 768px) {
+  .home__item {
+    color: rgb(77, 77, 77);
+    font-size: 1.5em;
+    line-height: 2.5em;
+  }
+}
+
+/* Desktop and beyond */
+@media (min-width: 1024px) {
 }

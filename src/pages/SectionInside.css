@@ -4,25 +4,33 @@
   display: flex;
   flex-direction: column;
   width: 100vw;
-  color: #585858;
-  font-family: "Source Sans Pro";
+  color: #525252;
 }
 
 .sectionInside__title {
   margin-top: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
+  font-family: "Montserrat";
+  font-size: 6vw;
+  font-weight: 300;
 }
 
 .sectionInside__textSection {
-  margin-top: -2em;
   margin-bottom: 1em;
   display: flex;
   flex-direction: column;
 }
 
+.sectionInside__year {
+  margin-top: 1em;
+  font-family: "Montserrat";
+  font-weight: 500;
+}
+
 .sectionInside__text {
   text-align: justify;
-  font-size: smaller;
+  font-size: 1em;
+  /* margin-top: 1em; */
 }
 
 .sectionInside__hidden {

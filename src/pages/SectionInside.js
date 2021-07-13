@@ -56,8 +56,8 @@ const SectionInside = props => {
           <div>{images}</div>
         </section>
         <section className="sectionInside__textSection">
-          <h3 className="sectionInside__title">{subtitle}</h3>
-          <h6 style={{ fontWeight: "700", marginTop: "-1em" }}>{year}</h6>
+          {/* <h3 className="sectionInside__title">{subtitle}</h3> */}
+          <h6 className="sectionInside__year">{year}</h6>
           <p className="sectionInside__text">{text}</p>
         </section>
       </div>

@@ -4,12 +4,15 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import NavigationDrawer from "./NavigationDrawer";
 import MenuIcon from "@material-ui/icons/Menu";
-import { ReactComponent as CazaIcon } from "../icons/logo.svg";
-import { Link } from "react-router-dom";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+// import { ReactComponent as CazaIcon } from "../icons/logo.svg";
+// import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 export default function Navbar() {
   const [showDrawer, setShowDrawer] = useState(false);
+
+  const tablet = useMediaQuery("(min-width:768px)");
 
   const handleClick = () => {
     setShowDrawer(!showDrawer);
@@ -26,7 +29,7 @@ export default function Navbar() {
             </div>
           </Link> */}
           <IconButton color="inherit" aria-label="menu" onClick={handleClick}>
-            <MenuIcon color="primary" />
+            <MenuIcon color="primary" fontSize={tablet ? "large" : "small"} />
           </IconButton>
         </Toolbar>
         <NavigationDrawer showDrawer={showDrawer} setShowDrawer={setShowDrawer} />

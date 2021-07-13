@@ -10,7 +10,7 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: "Source Sans Pro",
+    // fontFamily: "Source Sans Pro",
   },
 });
 

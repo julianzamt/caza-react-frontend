@@ -1,12 +1,12 @@
 .sectionCovers__container {
   padding: 2em 2em 4em 2em;
-  font-family: "Source Sans Pro";
 }
 
 .sectionCovers__title {
   text-transform: capitalize;
-  margin-bottom: 1em;
-  font-size: 10vw;
+  margin-bottom: 2em;
+  font-family: "Montserrat";
+  font-weight: 300;
 }
 
 .sectionCovers__covers_container {
@@ -16,4 +16,11 @@
 
 .sectionCovers__hidden {
   display: none;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .sectionCovers__title {
+    font-size: 1.5rem;
+  }
 }

@@ -52,7 +52,7 @@ const Documentacion = ({ section }) => {
           <div>{images}</div>
         </section>
         <section className="sectionInside__textSection">
-          <p className="mt-3">{text}</p>
+          <p className="sectionInside__text">{text}</p>
         </section>
       </div>
     </div>

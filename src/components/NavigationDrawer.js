@@ -7,31 +7,34 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { ReactComponent as CazaIcon } from "../icons/logo.svg";
 import { Link } from "react-router-dom";
-
-const useStyles = makeStyles({
-  list: {
-    width: 250,
-    height: "100%",
-    backgroundColor: "rgba(137, 137, 137, 0.6)",
-    fontFamily: "Source Sans Pro",
-    padding: "2em",
-  },
-  link: {
-    textDecoration: "none !important",
-  },
-  listItemText: {
-    color: "white",
-    "&:hover": {
-      color: "#e2e2c7 ",
-    },
-    "& span, & svg": {
-      fontSize: "1.5rem",
-    },
-    borderBottom: "0.5px solid lightgray",
-  },
-});
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 export default function TemporaryDrawer({ showDrawer, setShowDrawer }) {
+  const tablet = useMediaQuery("(min-width:768px)");
+
+  const useStyles = makeStyles({
+    list: {
+      width: tablet ? 350 : 250,
+      height: "100%",
+      backgroundColor: "rgba(137, 137, 137, 0.6)",
+      padding: "2em",
+    },
+    link: {
+      textDecoration: "none !important",
+    },
+    listItemText: {
+      color: "white",
+      "&:hover": {
+        color: "#e2e2c7 ",
+      },
+      "& span, & svg": {
+        fontSize: tablet ? "1.3rem" : "1.1rem",
+        marginBottom: "0.2em",
+      },
+      borderBottom: "0.5px solid lightgray",
+    },
+  });
+
   const classes = useStyles();
 
   const toggleDrawer = open => event => {
@@ -47,7 +50,7 @@ export default function TemporaryDrawer({ showDrawer, setShowDrawer }) {
         <CazaIcon style={{ width: 50, marginLeft: "0.8em", marginBottom: "2em", marginTop: "1em" }} />
         {links.map(link => (
           <Link to={link.path && link.path} className={clsx(classes.link)}>
-            <ListItem button key={link.text}>
+            <ListItem key={link.text} className="drawer__listItem">
               <ListItemText primary={link.text} className={clsx(classes.listItemText)} />
             </ListItem>
           </Link>
@@ -57,13 +60,13 @@ export default function TemporaryDrawer({ showDrawer, setShowDrawer }) {
   );
 
   const links = [
-    { text: "Home", path: "/" },
-    { text: "Obras", path: "/obras" },
-    { text: "Proyectos", path: "/proyectos" },
-    { text: "Equipamientos", path: "/equipamientos" },
-    { text: "Productos", path: "/productos" },
-    { text: "Documentación", path: "/documentacion" },
-    { text: "Nosotras", path: "/aboutus" },
+    { text: "home", path: "/" },
+    { text: "obras", path: "/obras" },
+    { text: "proyectos", path: "/proyectos" },
+    { text: "equipamientos", path: "/equipamientos" },
+    { text: "productos", path: "/productos" },
+    { text: "documentación", path: "/documentacion" },
+    { text: "nosotras", path: "/aboutus" },
   ];
 
   return (

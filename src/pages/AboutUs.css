@@ -1,8 +1,16 @@
 .aboutUs__container {
   padding: 1em;
-  font-family: "Source Sans Pro";
+}
+
+.aboutUs__title {
+  font-family: Helvetica, Arial;
 }
 
 .aboutUs__text {
-  font-size: 1.2em;
+  /* font-size: 1.2em; */
+  padding: 1em;
+}
+
+.aboutUs__cv {
+  font-size: 0.9em;
 }

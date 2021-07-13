@@ -6,12 +6,12 @@ const AboutUs = () => {
   return (
     <div>
       <div className="aboutUs__container">
-        <h1>CA.ZA Estudio</h1>
+        <h3 className="aboutUs__title">CA.ZA Estudio</h3>
       </div>
       <Image src={portada} fluid />
 
       <div className="aboutUs__container">
-        <p className="aboutUs__text p-3">
+        <p className="aboutUs__text">
           CA.ZA Estudio surge en el año 2015 a partir de la asociación de las arquitectas Nina Carrara y María Zamtlejfer. El estudio, con sede en
           CABA, centra su actividad en el desarrollo de viviendas unifamiliares, reformas, re funcionalizaciones, desarrollo de mobiliario en serie,
           equipamiento a medida e interiorismo, manteniendo el diálogo entre lo micro y lo macro como método de estudio y aprendizaje.

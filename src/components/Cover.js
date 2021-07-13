@@ -1,4 +1,3 @@
-import { useState } from "react";
 import NoImage from "../components/NoImage";
 import "./Cover.css";
 

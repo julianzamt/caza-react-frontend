@@ -1,5 +1,4 @@
 .logo__scene {
-  border: 1px solid gray;
   border-radius: 50%;
   width: 180px;
   height: 180px;
@@ -70,4 +69,16 @@
 #background2 {
   -webkit-animation-delay: -4s;
   animation-delay: -4s;
+}
+
+/* Tablets */
+@media (min-width: 768px) {
+  .logo__scene {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+/* Desktop and beyond */
+@media (min-width: 1024px) {
 }

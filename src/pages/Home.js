@@ -8,22 +8,22 @@ const Home = () => {
       <Logo />
       <div className="home__options">
         <Link to={"/obras"} className="home__item">
-          Obras
+          obras
         </Link>
         <Link to={"/proyectos"} className="home__item">
-          Proyectos
+          proyectos
         </Link>
         <Link to={"/equipamientos"} className="home__item">
-          Equipamientos
+          equipamientos
         </Link>
         <Link to={"/producto"} className="home__item">
-          Producto
+          producto
         </Link>
         <Link to={"/documentacion"} className="home__item">
-          Documentación
+          documentación
         </Link>
         <Link to={"/aboutus"} className="home__item">
-          Nosotras
+          nosotras
         </Link>
       </div>
     </div>
