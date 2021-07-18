@@ -101,4 +101,24 @@ function deleteImage(section, documentId, imageId, key, coverFlag) {
   );
 }
 
-export { fetchCollection, fetchDocument, postDocument, deleteImage, deleteDocument, updateCover, updateText, updateImages, updateOrder };
+function updateCoversOrder({ section, collection }) {
+  const token = localStorage.getItem("token");
+  return axios.put(`http://localhost:5000/${section}/update-collection-order`, collection, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
+}
+
+export {
+  fetchCollection,
+  fetchDocument,
+  postDocument,
+  deleteImage,
+  deleteDocument,
+  updateCover,
+  updateText,
+  updateImages,
+  updateOrder,
+  updateCoversOrder,
+};

@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import CreateForm from "../components/CreateForm";
 import DocumentacionCreateForm from "../components/DocumentacionCreateForm";
 import DocumentacionEditForm from "../components/DocumentacionEditForm";
+import CoverOrderForm from "../components/CoverOrderForm";
 import EditForm from "../components/EditForm";
 import Button from "react-bootstrap/Button";
 import "./Admin.css";
@@ -60,10 +61,13 @@ const Admin = () => {
           <h1 style={{ textTransform: "capitalize", textAlign: "center", marginTop: "0.8em", marginBottom: "1em" }}>{section}</h1>
           <div className="admin__button-container">
             <Button id="createForm" onClick={handleClick} variant="outline-info">
-              Crear nueva entrada
+              Nueva
             </Button>
             <Button id="editForm" onClick={handleClick} variant="outline-info">
-              Editar entrada
+              Editar
+            </Button>
+            <Button id="coverOrderForm" onClick={handleClick} variant="outline-info">
+              Editar orden portadas
             </Button>
           </div>
         </div>
@@ -71,6 +75,7 @@ const Admin = () => {
       {formType === "createForm" && <CreateForm section={section} setFeedback={setFeedback} setFormType={setFormType} />}
       {formType === "documentacionCreateForm" && <DocumentacionCreateForm section={section} setFeedback={setFeedback} setFormType={setFormType} />}
       {formType === "editForm" && <EditForm setFeedback={setFeedback} section={section} setFormType={setFormType} />}
+      {formType === "coverOrderForm" && <CoverOrderForm setFeedback={setFeedback} section={section} />}
       {formType === "documentacionEditForm" && <DocumentacionEditForm setFeedback={setFeedback} section={section} setFormType={setFormType} />}
       {feedback && <FeedbackModal feedback={feedback} setFeedback={setFeedback} />}
     </div>

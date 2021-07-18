@@ -22,7 +22,7 @@ const GlobalState = props => {
     localStorage.setItem("username", "");
     setUsername("");
     setLogin(false);
-    history.push("/");
+    history.push("/admin/login");
   };
 
   return (
