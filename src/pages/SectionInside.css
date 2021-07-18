@@ -1,18 +1,16 @@
 .sectionInside__container {
-  padding-left: 2em;
-  padding-right: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 100%;
   color: #525252;
 }
 
 .sectionInside__title {
-  margin-top: 1em;
-  margin-bottom: 2em;
-  font-family: "Montserrat";
-  font-size: 6vw;
-  font-weight: 300;
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 1.5em;
 }
 
 .sectionInside__textSection {
@@ -35,4 +33,17 @@
 
 .sectionInside__hidden {
   display: none;
+}
+
+@media (min-width: 1001px) {
+  .sectionInside__container {
+    align-items: center;
+  }
+
+  .sectionInside__textSection {
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+  }
 }

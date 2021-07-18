@@ -6,6 +6,7 @@ import SectionInside from "./pages/SectionInside";
 import Documentacion from "./pages/Documentacion";
 import AboutUs from "./pages/AboutUs";
 import Login from "./pages/Login";
+import { Contacto } from "./pages/Contacto";
 import Register from "./pages/Register.js";
 import Admin from "./pages/Admin";
 import Navbar from "./components/Navbar";
@@ -31,6 +32,7 @@ const App = () => {
             <Route exact path="/productos" render={() => <SectionCovers section="productos" />} />
             <Route exact path="/documentacion" render={() => <Documentacion section="documentacion" />} />
             <Route exact path="/aboutus" component={AboutUs} />
+            <Route exact path="/contacto" component={Contacto} />
             <Route exact path="/admin" render={() => (context.login ? <Admin /> : <Redirect to="/admin/login" />)} />
             <Route exact path="/admin/login" component={Login} />
             <Route exact path="/admin/register" component={Register} />

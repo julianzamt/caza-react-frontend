@@ -1,26 +1,26 @@
-.sectionCovers__container {
-  padding: 2em 2em 4em 2em;
-}
+/* .sectionCovers__container {
+  padding: 0 0 4em 0;
+} */
 
-.sectionCovers__title {
+/* .sectionCovers__title {
+  text-align: center;
+  margin-bottom: 1em;
   text-transform: capitalize;
-  margin-bottom: 2em;
   font-family: "Montserrat";
   font-weight: 300;
-}
-
-.sectionCovers__covers_container {
-  display: flex;
-  flex-direction: column;
-}
+} */
 
 .sectionCovers__hidden {
   display: none;
 }
 
-/* Tablet */
-@media (min-width: 768px) {
-  .sectionCovers__title {
-    font-size: 1.5rem;
+/* Desktop  */
+@media (min-width: 1001px) {
+  .sectionCovers__container {
+    padding: 2em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 0em;
+    column-gap: 2em;
   }
 }

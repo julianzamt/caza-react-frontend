@@ -1,0 +1,26 @@
+.contacto__container {
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 2em;
+  font-size: 1.3em;
+  color: #2e2e2e;
+}
+
+.contacto__title {
+  font-family: "Montserrat";
+  font-weight: 500;
+}
+
+.contacto__links {
+  font-size: 1.4em;
+  margin-bottom: 0.2em;
+  text-decoration: none !important;
+  color: #2e2e2e;
+}
+
+.contacto__links:visited {
+  color: #2e2e2e;
+}

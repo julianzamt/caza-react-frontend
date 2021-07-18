@@ -1,9 +1,29 @@
 .sectionInsideImage__container {
   width: 100%;
+  margin-bottom: 1em;
+  display: flex;
+  justify-content: center;
 }
 
 .sectionInsideImage__image {
   width: 100%;
-  margin-bottom: 2em;
-  border-radius: 4px;
+}
+
+.sectionInsideImage__hidden {
+  visibility: hidden;
+}
+
+.sectionInsideImage__visible {
+  visibility: visible;
+}
+
+@media (min-width: 1001px) {
+  .sectionInsideImage__container {
+    width: 50vw;
+    margin-bottom: 3em;
+  }
+
+  .sectionInsideImage__portrait {
+    width: 30vw;
+  }
 }

@@ -49,8 +49,8 @@ export default function TemporaryDrawer({ showDrawer, setShowDrawer }) {
       <List>
         <CazaIcon style={{ width: 50, marginLeft: "0.8em", marginBottom: "2em", marginTop: "1em" }} />
         {links.map(link => (
-          <Link to={link.path && link.path} className={clsx(classes.link)}>
-            <ListItem key={link.text} className="drawer__listItem">
+          <Link to={link.path && link.path} className={clsx(classes.link)} key={link.text}>
+            <ListItem className="drawer__listItem">
               <ListItemText primary={link.text} className={clsx(classes.listItemText)} />
             </ListItem>
           </Link>
@@ -67,6 +67,7 @@ export default function TemporaryDrawer({ showDrawer, setShowDrawer }) {
     { text: "productos", path: "/productos" },
     { text: "documentación", path: "/documentacion" },
     { text: "nosotras", path: "/aboutus" },
+    { text: "contacto", path: "/contacto" },
   ];
 
   return (

@@ -3,7 +3,7 @@
 }
 
 .aboutUs__title {
-  font-family: Helvetica, Arial;
+  font-family: "Montserrat";
 }
 
 .aboutUs__text {
@@ -13,4 +13,26 @@
 
 .aboutUs__cv {
   font-size: 0.9em;
+}
+
+.aboutUs__portada {
+  width: 100%;
+}
+
+@media (min-width: 1001px) {
+  .aboutUs__cvContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2em;
+    padding: 2em;
+  }
+
+  .aboutUs__text {
+    font-size: 1.2em;
+    line-height: 1.8em;
+    padding-left: 20%;
+    padding-right: 20%;
+    margin-bottom: 0;
+    margin-top: 1em;
+  }
 }

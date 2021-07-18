@@ -1,0 +1,16 @@
+.documentacionInsideImage__container {
+  position: relative;
+}
+
+.documentacionInsideImage__image {
+  width: 100%;
+  margin-bottom: 2em;
+}
+
+.documentacionInsideImage__hidden {
+  visibility: hidden;
+}
+
+.documentacionInsideImage__visible {
+  visibility: visible;
+}

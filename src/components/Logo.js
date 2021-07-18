@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from "react";
-import { useSpring, animated } from "react-spring";
 import logoBackgrounds from "../components/logoBackgrounds";
 import logo from "../icons/logo.svg";
 import "./Logo.css";
@@ -20,8 +18,8 @@ const Logo = () => {
   //   }, [activeIndex]);
 
   return (
-    <div className="logo__scene">
-      <img src={logo} alt="logo" className="logo__logo" />
+    <div className="logo__scene fade-in-fwd-logo">
+      <img src={logo} alt="logo" className="logo__logo fade-in-fwd-logo" />
       <img src={logoBackgrounds[0]} alt="logo" className="logo__background" />
       <img id="background1" src={logoBackgrounds[1]} alt="logo" className="logo__background" />
       <img id="background2" src={logoBackgrounds[2]} alt="logo" className="logo__background" />

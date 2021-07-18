@@ -1,0 +1,25 @@
+.documentacion__container {
+  width: 100%;
+}
+
+.documentacion__text {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+@media (min-width: 1001px) {
+  .documentacion__imageContainer {
+    padding-left: 2em;
+    padding-right: 2em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 0em;
+    column-gap: 2em;
+  }
+
+  .documentacion__text {
+    padding-left: 10em;
+    padding-right: 10em;
+    padding-bottom: 1em;
+  }
+}
