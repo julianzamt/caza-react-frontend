@@ -13,7 +13,7 @@ function postDocument({ title, subtitle, year, text, coverToUpload, imagesToUplo
 
   const token = localStorage.getItem("token");
 
-  return axios.post(`${section}`, formData, {
+  return axios.post(`https://cazaestudio.herokuapp.com/${section}`, formData, {
     headers: { "Content-Type": "multipart/form-data", "x-access-token": token },
   });
 }
