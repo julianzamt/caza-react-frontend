@@ -53,7 +53,6 @@ const Admin = () => {
           <option value="equipamientos">Equipamientos</option>
           <option value="productos">Productos</option>
           <option value="documentacion">Documentación</option>
-          <option value="nosotras">Nosotras</option>
         </Form.Control>
       </Form>
       {section && (

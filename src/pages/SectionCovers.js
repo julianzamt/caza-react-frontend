@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const SectionCovers = ({ section }) => {
   const [covers, setCovers] = useState([]);
+  const [threeColumns, setThreeColumns] = useState(false);
 
   function useForceUpdate() {
     const [value, setValue] = useState(0);
@@ -32,11 +33,12 @@ const SectionCovers = ({ section }) => {
   useEffect(() => {
     fetchCovers();
     forceUpdate();
+    section === "productos" ? setThreeColumns(true) : setThreeColumns(false);
   }, [section]);
 
   return (
     <div>
-      <div className={`sectionCovers__container`}>
+      <div className={threeColumns ? `sectionCovers__container_threeColumns` : "sectionCovers__container_twoColumns"}>
         {/* <h3 className="sectionCovers__title">{section}</h3> */}
         {covers}
       </div>

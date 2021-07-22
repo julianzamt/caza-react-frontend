@@ -16,10 +16,17 @@
 
 /* Desktop  */
 @media (min-width: 1001px) {
-  .sectionCovers__container {
+  .sectionCovers__container_twoColumns {
     padding: 2em;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    row-gap: 0em;
+    column-gap: 2em;
+  }
+  .sectionCovers__container_threeColumns {
+    padding: 2em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     row-gap: 0em;
     column-gap: 2em;
   }

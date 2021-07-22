@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function postDocument({ title, subtitle, year, text, coverToUpload, imagesToUpload, section }) {
+function postDocument({ title, subtitle, year, text, coverToUpload, imagesToUpload, index, section }) {
   const formData = new FormData();
   formData.append("title", title);
   formData.append("subtitle", subtitle);
@@ -101,24 +101,16 @@ function deleteImage(section, documentId, imageId, key, coverFlag) {
   );
 }
 
-function updateCoversOrder({ section, collection }) {
+function updateIndex({ index, documentId, section }) {
+  const data = {
+    index: index,
+  };
   const token = localStorage.getItem("token");
-  return axios.put(`http://localhost:5000/${section}/update-collection-order`, collection, {
+  return axios.put(`http://localhost:5000/${section}/${documentId}/update-index`, data, {
     headers: {
       "x-access-token": token,
     },
   });
 }
 
-export {
-  fetchCollection,
-  fetchDocument,
-  postDocument,
-  deleteImage,
-  deleteDocument,
-  updateCover,
-  updateText,
-  updateImages,
-  updateOrder,
-  updateCoversOrder,
-};
+export { fetchCollection, fetchDocument, postDocument, deleteImage, deleteDocument, updateCover, updateText, updateImages, updateOrder, updateIndex };

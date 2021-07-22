@@ -3,7 +3,7 @@ import FormFile from "react-bootstrap/FormFile";
 import { useState, useRef, useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
-import { deleteDocument, fetchCollection, updateCover, updateText, updateImages, updateOrder } from "../services/services";
+import { deleteDocument, fetchCollection, updateCover, updateText, updateImages, updateOrder, updateIndex } from "../services/services";
 import { successMessages, errorMessages } from "../utils/feedbackMessages";
 import CoverPreview from "../components/CoverPreview";
 import ImagePreview from "../components/ImagePreview";
@@ -35,6 +35,8 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
   const [isSavingImages, setIsSavingImages] = useState(false);
   const [isSavingOrder, setIsSavingOrder] = useState(false);
   const [isDeletingDocument, setIsDeletingDocument] = useState(false);
+  const [index, setIndex] = useState("");
+  const [isSavingIndex, setIsSavingIndex] = useState(false);
 
   const TEXT_LIMIT = 300;
   const TITLE_LIMIT = 25;
@@ -75,6 +77,7 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
       setText(document.text);
       setImages(document.images);
       document.cover && setCover(document.cover[0]);
+      setIndex(document.index);
       setDisablePostText(true);
       setDisableNewOrderButton(true);
     }
@@ -189,6 +192,25 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
         }
         setIsLoading(false);
       }
+    } else if (action === "updateIndex") {
+      const documentId = document._id;
+      setIsSavingIndex(true);
+      try {
+        const updatedDocument = await updateIndex({ index, documentId, section });
+        setDocument(updatedDocument.data);
+        fetchSectionData();
+        setFeedback(successMessages.GENERAL.editOk);
+        setIsSavingText(false);
+      } catch (e) {
+        if (e.response) {
+          console.log(e.response);
+          setFeedback(e.response.data.message);
+        } else {
+          console.log(e);
+          setFeedback(errorMessages.NO_CONNECTION);
+        }
+        setIsSavingText(false);
+      }
     }
   };
 
@@ -246,6 +268,8 @@ const EditForm = ({ setFeedback, section, setFormType }) => {
           return document["_id"] === event.target.value;
         })
       );
+    } else if (name === "index") {
+      setIndex(event.target.value);
     }
   };
 

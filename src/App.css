@@ -4,3 +4,17 @@
   grid-template-rows: auto 1fr auto;
   /* margin-top: 7em; */
 }
+
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+  max-height: 80px;
+  max-width: 80px;
+}
+
+.thumbnail {
+  max-height: 80px;
+}

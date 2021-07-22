@@ -2,7 +2,7 @@ import NoImage from "../components/NoImage";
 import "./Cover.css";
 import React, { useState } from "react";
 
-const Cover = ({ path, title, section, setLoadCount }) => {
+const Cover = ({ path, title, section }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -12,7 +12,7 @@ const Cover = ({ path, title, section, setLoadCount }) => {
       {path ? (
         <img className="cover__image" src={`http://localhost:5000/${section}/images/${path}`} alt={title} onLoad={() => setIsLoading(false)} />
       ) : (
-        <NoImage className="cover__image" alt={title} setLoadCount={setLoadCount} />
+        <NoImage className="cover__image" alt={title} />
       )}
     </div>
   );

@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import { useState, useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
-import { fetchCollection, updateCoversOrder } from "../services/services";
+import { fetchCollection, updateIndex } from "../services/services";
 import { successMessages, errorMessages } from "../utils/feedbackMessages";
 import SectionCoverThumb from "./SectionCoverThumb";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -17,12 +17,7 @@ const CoverOrderForm = ({ setFeedback, section }) => {
     try {
       setIsLoading(true);
       const res = await fetchCollection(section);
-      setCollection(
-        res.data.map(item => {
-          console.log(item);
-          return item;
-        })
-      );
+      setCollection(res.data.map(item => item));
       setIsLoading(false);
     } catch (e) {
       if (e.response) {
@@ -45,7 +40,11 @@ const CoverOrderForm = ({ setFeedback, section }) => {
     setFeedback("");
     try {
       setIsSavingOrder(true);
-      await updateCoversOrder({ collection, section });
+      for (let i = 0; i < collection.length; i++) {
+        const documentId = collection[i]._id;
+        const index = i;
+        await updateIndex({ index, documentId, section });
+      }
       fetchSectionData();
       setFeedback(successMessages.GENERAL.editOk);
       setIsSavingOrder(false);
@@ -64,6 +63,7 @@ const CoverOrderForm = ({ setFeedback, section }) => {
   const handleOnDragEnd = result => {
     if (!result.destination) return;
     setDisableNewOrderButton(false);
+    console.log(result);
     let items = Array.from(collection);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
@@ -89,7 +89,11 @@ const CoverOrderForm = ({ setFeedback, section }) => {
                           <Draggable key={document._id} draggableId={document._id} index={index}>
                             {provided => (
                               <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                <SectionCoverThumb path={document.cover[0].path} section={section} title={document.title} />
+                                <SectionCoverThumb
+                                  path={document.cover[0] ? document.cover[0].path : null}
+                                  section={section}
+                                  title={document.title}
+                                />
                               </li>
                             )}
                           </Draggable>
