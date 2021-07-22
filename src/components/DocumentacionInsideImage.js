@@ -11,7 +11,7 @@ const DocumentacionInsideImage = ({ section, path }) => {
       }`}>
       <img
         className="documentacionInsideImage__image"
-        src={`http://localhost:5000/${section}/images/${path}`}
+        src={`https://cazaestudio.herokuapp.com/${section}/images/${path}`}
         alt={`imagen de ${section}`}
         onLoad={() => setIsLoading(false)}
       />

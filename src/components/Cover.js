@@ -10,7 +10,12 @@ const Cover = ({ path, title, section }) => {
       <div className="cover__dark-overlay"></div>
       <div className="cover__text">{title}</div>
       {path ? (
-        <img className="cover__image" src={`http://localhost:5000/${section}/images/${path}`} alt={title} onLoad={() => setIsLoading(false)} />
+        <img
+          className="cover__image"
+          src={`https://cazaestudio.herokuapp.com/${section}/images/${path}`}
+          alt={title}
+          onLoad={() => setIsLoading(false)}
+        />
       ) : (
         <NoImage className="cover__image" alt={title} />
       )}

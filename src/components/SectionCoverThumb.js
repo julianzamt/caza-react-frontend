@@ -12,7 +12,7 @@ const SectionCoverThumb = ({ path, section, title }) => {
       {path ? (
         <Image
           className={visible ? "thumbnail visible fade-in-fwd" : "hidden"}
-          src={`http://localhost:5000/${section}/images/${path}`}
+          src={`https://cazaestudio.herokuapp.com/${section}/images/${path}`}
           alt="section cover"
           onLoad={() => setVisible(true)}
           thumbnail

@@ -32,7 +32,7 @@ const CoverPreview = ({ img, document, setFeedback, setDocument, section }) => {
   return (
     <div className="imagePreview__thumbnail-container" key={img._id}>
       <span>{img.originalName}</span>
-      <Image className="imagePreview__thumbnail" src={`http://localhost:5000/${section}/images/${img.path}`} alt="interior" thumbnail />
+      <Image className="imagePreview__thumbnail" src={`https://cazaestudio.herokuapp.com/${section}/images/${img.path}`} alt="interior" thumbnail />
       {isLoading ? (
         <Spinner animation="grow" />
       ) : (
