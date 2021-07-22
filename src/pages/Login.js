@@ -18,7 +18,7 @@ const Login = () => {
 
   async function logUser(user) {
     try {
-      const response = await axios.post("http://localhost:5000/users/", user);
+      const response = await axios.post("https://cazaestudio.herokuapp.com/users/", user);
       console.log(response);
       setIsLoading(false);
       context.loginUser(username, response.data.token);

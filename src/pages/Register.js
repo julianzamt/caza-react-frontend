@@ -31,8 +31,8 @@ const Register = () => {
         secretKey: secretKey,
       };
 
-      await axios.post("http://localhost:5000/users/register", newUser);
-      const response = await axios.post("http://localhost:5000/users/", { username, password });
+      await axios.post("https://cazaestudio.herokuapp.com/users/register", newUser);
+      const response = await axios.post("https://cazaestudio.herokuapp.com/users/", { username, password });
       setIsLoading(false);
       context.loginUser(username, response.data.token);
     } catch (e) {
