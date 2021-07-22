@@ -63,7 +63,6 @@ const CoverOrderForm = ({ setFeedback, section }) => {
   const handleOnDragEnd = result => {
     if (!result.destination) return;
     setDisableNewOrderButton(false);
-    console.log(result);
     let items = Array.from(collection);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
