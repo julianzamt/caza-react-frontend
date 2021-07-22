@@ -4,7 +4,6 @@
 
 .documentacionInsideImage__image {
   width: 100%;
-  margin-bottom: 2em;
 }
 
 .documentacionInsideImage__hidden {
@@ -13,4 +12,10 @@
 
 .documentacionInsideImage__visible {
   visibility: visible;
+}
+
+@media (max-width: 1001px) {
+  .documentacionInsideImage__container {
+    margin-bottom: 1em;
+  }
 }

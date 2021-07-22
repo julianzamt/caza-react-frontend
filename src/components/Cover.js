@@ -6,7 +6,7 @@ const Cover = ({ path, title, section }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className={`cover__container ${isLoading ? "cover__displayNone" : "cover__displayBlock fade-in-fwd"}`}>
+    <div className={`cover__container ${isLoading ? "hidden" : "visible fade-in-fwd"}`}>
       <div className="cover__dark-overlay"></div>
       <div className="cover__text">{title}</div>
       {path ? (

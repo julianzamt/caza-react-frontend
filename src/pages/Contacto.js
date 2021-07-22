@@ -3,7 +3,7 @@ import "./Contacto.css";
 
 export const Contacto = () => {
   return (
-    <div className="contacto__container fade-in-fwd">
+    <div className="contacto__container">
       <h1 className="contacto__title">CAZA estudio</h1>
       <a href="mailto:caza.arqs@gmail.com" className="contacto__links">
         <strong style={{ fontWeight: "normal", color: "#2e2e2e" }}>caza.arqs@gmail.com</strong>
@@ -15,8 +15,9 @@ export const Contacto = () => {
         <a className="contacto__links" href="https://www.instagram.com/caza.estudio" target="_blanck" rel="noreferrer">
           Instagram &nbsp;
         </a>
+        <span>/&nbsp; </span>
         <a className="contacto__links" href="https://www.facebook.com/cazaestudio" target="_blanck" rel="noreferrer">
-          /&nbsp; Facebook
+          Facebook
         </a>
       </div>
     </div>

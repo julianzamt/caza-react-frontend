@@ -20,7 +20,7 @@
     padding: 2em;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    row-gap: 0em;
+    row-gap: 2em;
     column-gap: 2em;
   }
   .sectionCovers__container_threeColumns {

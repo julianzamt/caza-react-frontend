@@ -19,7 +19,7 @@
   width: 100%;
 }
 
-@media (min-width: 1001px) {
+@media (min-width: 768px) {
   .aboutUs__cvContainer {
     display: grid;
     grid-template-columns: 1fr 1fr;
