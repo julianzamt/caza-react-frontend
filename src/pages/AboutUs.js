@@ -8,7 +8,7 @@ const AboutUs = () => {
       <div className="aboutUs__container">
         <h2 className="aboutUs__title">CAZA estudio</h2>
       </div>
-      <Image src={portada} className="aboutUs__portada" />
+      <Image src={portada} className="aboutUs__portada fade-in-fwd" />
 
       <div className="aboutUs__container">
         <p className="aboutUs__text">

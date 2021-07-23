@@ -1,6 +1,4 @@
 import "./Footer.css";
-import InstagramIcon from "@material-ui/icons/Instagram";
-import FacebookIcon from "@material-ui/icons/Facebook";
 
 const Footer = () => {
   return (

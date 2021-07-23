@@ -2,6 +2,8 @@ import "./SectionInsideImage.css";
 import React, { useState, useRef } from "react";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
+const baseUrl = process.env.REACT_APP_DEVELOPMENT_BASE_URL || "https://cazaestudio.herokuapp.com";
+
 const SectionInsideImage = ({ section, path, setLoadCount }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [portrait, setPortrait] = useState(false);
@@ -20,7 +22,7 @@ const SectionInsideImage = ({ section, path, setLoadCount }) => {
       <img
         className={portrait && tablet ? "sectionInsideImage__portrait" : "sectionInsideImage__image"}
         ref={imgRef}
-        src={`https://cazaestudio.herokuapp.com/${section}/images/${path}`}
+        src={`${baseUrl}/${section}/images/${path}`}
         alt={`imagen de ${section}`}
         onLoad={handleLoad}
       />

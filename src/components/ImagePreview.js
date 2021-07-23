@@ -6,6 +6,8 @@ import { successMessages, errorMessages } from "../utils/feedbackMessages";
 import Spinner from "react-bootstrap/Spinner";
 import "./ImagePreview.css";
 
+const baseUrl = process.env.REACT_APP_DEVELOPMENT_BASE_URL || "https://cazaestudio.herokuapp.com";
+
 const ImagePreview = ({ img, document, setFeedback, setDocument, section }) => {
   const [isLoading, setIsLoading] = useState(false);
   const handleClick = async event => {
@@ -33,7 +35,7 @@ const ImagePreview = ({ img, document, setFeedback, setDocument, section }) => {
   return (
     <div className="imagePreview__thumbnail-container" key={img._id}>
       <span>{img.originalName}</span>
-      <Image className="imagePreview__thumbnail" src={`https://cazaestudio.herokuapp.com/${section}/images/${img.path}`} alt="interior" thumbnail />
+      <Image className="imagePreview__thumbnail" src={`${baseUrl}/${section}/images/${img.path}`} alt="interior" thumbnail />
       {isLoading ? (
         <Spinner animation="grow" />
       ) : (
