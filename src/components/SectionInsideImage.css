@@ -3,6 +3,7 @@
   margin-bottom: 1em;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .sectionInsideImage__image {
@@ -20,6 +21,7 @@
 @media (min-width: 1001px) {
   .sectionInsideImage__container {
     width: 50vw;
+    height: inherit;
     margin-bottom: 3em;
   }
 
